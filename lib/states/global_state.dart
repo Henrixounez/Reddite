@@ -1,27 +1,28 @@
-import 'package:flutter/widgets.dart';
-import 'package:reddite/services/reddit_client_service.dart';
+import 'package:mobx/mobx.dart';
 import 'package:draw/draw.dart';
-import 'package:reddite/utils/reddit_secret.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
-class GlobalState with ChangeNotifier {
+import 'package:reddite/states/auth.dart';
+import 'package:reddite/utils/reddit_secret.dart';
+
+part 'global_state.g.dart';
+
+class GlobalState = _GlobalState with _$GlobalState;
+
+abstract class _GlobalState with Store {
   String _credentials;
 
   bool get hasCredentials => _credentials != null;
-  String get authUrl => _redditClientService.authUrl;
-  String get username => _redditClientService.username;
-  Redditor get me => _redditClientService.me;
 
-  RedditClientService _redditClientService;  
-
-  Future<void> initApp({
+  Future<bool> initApp({
     String authCode
   }) async {
     if (authCode != null) {
-      _redditClientService = RedditClientService.createInstalledFlow(authCode);
-      await _redditClientService.authorizeClient(authCode);
-      await _redditClientService.setMe();
+      authStore.createInstalledFlow(authCode);
+      await authStore.authorizeClient(authCode);
+      await authStore.setMe();
+      return true;
     } else {
       await checkCredentials();
       if (_credentials == null) {
@@ -30,13 +31,14 @@ class GlobalState with ChangeNotifier {
           userAgent: "reddite-app",
           deviceId: Uuid().v4(),
         );
-        _redditClientService = RedditClientService(reddit: reddit);
+        authStore.setReddit(reddit);
       } else {
-        _redditClientService = RedditClientService.restoreInstalledFlow(_credentials);
-        await _redditClientService.setMe();
+        authStore.restoreInstalledFlow(_credentials);
+        await authStore.setMe();
+        return true;
       }
     }
-    notifyListeners();
+    return false;
   }
 
   Future<void> checkCredentials() async {
@@ -44,7 +46,6 @@ class GlobalState with ChangeNotifier {
     String credentials = prefs.getString('credentials') ?? null;
     if (credentials != null) {
       _credentials = credentials;
-      notifyListeners();
     }
   }
 
@@ -54,9 +55,11 @@ class GlobalState with ChangeNotifier {
       userAgent: "reddite-app",
       deviceId: Uuid().v4(),
     );
-    _redditClientService = RedditClientService(reddit: reddit);
+    authStore.setReddit(reddit);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     this._credentials = null;
     prefs.setString('credentials', null);
   }
 }
+
+final globalStore = GlobalState();

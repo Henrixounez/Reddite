@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:draw/draw.dart';
+import 'package:reddite/utils/styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:reddite/utils/colors.dart';
 import 'package:reddite/utils/reddit_secret.dart';
@@ -16,6 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return RedditeScaffold(
+      showNavbar: false,
       body: Container(
         padding: EdgeInsets.all(50),
         height: MediaQuery.of(context).size.height,
@@ -47,9 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 30,),
                   Text(
                     'Reddite',
-                    style: Theme.of(context).textTheme.headline2.copyWith(
-                      fontFamily: 'BerlinSansFB'
-                    ),
+                    style: fontTitle.copyWith(fontSize: 50)
                   ),
                 ],
               ),
@@ -68,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ).toString()
                 );
               },
-              child: Text('Sign in', style: Theme.of(context).textTheme.button),
+              child: Text('Sign in', style: fontMedium.copyWith(fontSize: 15)),
             ),
           ],
         )
