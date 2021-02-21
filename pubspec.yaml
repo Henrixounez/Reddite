@@ -26,10 +26,14 @@ dependencies:
   draw:
     path: './packages/DRAW/'
   url_launcher: ^5.7.10
-  provider: ^4.3.3
+  # provider: ^4.3.3
+  flutter_mobx: ^1.1.0+2
   shared_preferences: ^0.5.12+4
   uuid: ^2.2.2
   uni_links: ^0.4.0
+  get: ^3.25.4
+  better_player: ^0.0.56
+  video_provider: ^1.2.3+2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -38,6 +42,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: ^1.11.1
+  mobx_codegen: ^1.1.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -71,9 +77,14 @@ flutter:
     - family: BerlinSansFB
       fonts:
         - asset: fonts/Berlin-Sans-FB-Regular.ttf
-    - family: FranklinGothic
+    - family: FranklinGothicBook
       fonts:
-        - asset: fonts/Franklin-Gothic.ttf
+        - asset: fonts/Franklin-Gothic-Book.ttf
+    - family: FranklinGothicMedium
+      fonts:
+        - asset: fonts/Franklin-Gothic-Medium.ttf
+
+        # - asset: fonts/Franklin-Gothic.ttf
 
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
