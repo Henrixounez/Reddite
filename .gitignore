@@ -41,3 +41,5 @@ app.*.symbols
 app.*.map.json
 
 /lib/utils/reddit_secret.dart
+
+packages/
