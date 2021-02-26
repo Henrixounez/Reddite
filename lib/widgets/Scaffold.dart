@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:reddite/states/auth.dart';
 import 'package:reddite/utils/colors.dart';
+import 'package:reddite/utils/styles.dart';
 import 'package:reddite/widgets/Input.dart';
 
 class RedditeScaffold extends StatelessWidget {
@@ -29,7 +30,7 @@ class RedditeScaffold extends StatelessWidget {
     return AppBar(
       automaticallyImplyLeading: false,
       shadowColor: Color(0x000000),
-      titleSpacing: 16,
+      titleSpacing: mainHorizontalPadding,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:reddite/utils/colors.dart';
 import 'package:reddite/utils/styles.dart';
 
@@ -47,7 +48,16 @@ class _RedditeTopInput extends State<RedditeTopInput> {
                   hintText: widget.hintText,
                   fillColor: Colors.white,
                   hintStyle: fontBook.copyWith(color: lightText),
-                  border: InputBorder.none
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.all(0),
+                  suffixIcon:IconButton(
+                    icon: Icon(
+                      FeatherIcons.search,
+                      color: redditOrange,
+                      size: 16
+                    ),
+                    onPressed: () => widget.onSubmit(controller.text),
+                  ),
                 ),
                 cursorColor: lightText,
                 style: fontBook.copyWith(color: darkGrey),
@@ -55,14 +65,6 @@ class _RedditeTopInput extends State<RedditeTopInput> {
                 onSubmitted: (String text) { widget.onSubmit(text); },
               ),
             ),
-            IconButton(
-              icon: Icon(
-                Icons.search,
-                color: redditOrange,
-                size: 20,
-              ),
-              onPressed: () => widget.onSubmit(controller.text),
-            )
           ]
         )
       )

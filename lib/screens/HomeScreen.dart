@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
           bool loadMore = (index > postsStore.contents.length - 10);
           if (loadMore && !postsStore.isLoading)
             postsStore.loadPosts(loadMore: true);
-          return Post(post: post);
+          return Post(post: post, index: index);
         },
         childCount: postsStore.contents.length
       )

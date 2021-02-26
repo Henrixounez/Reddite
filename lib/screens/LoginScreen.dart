@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
             ),
-            RedditeButton(
+            RedditeLoginButton(
               onPressed: () {
                 Reddit reddit = Reddit.createInstalledFlowInstance(
                   clientId: clientId,

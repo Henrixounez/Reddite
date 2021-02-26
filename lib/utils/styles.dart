@@ -16,3 +16,6 @@ const fontBook = TextStyle(
   color: white,
   fontSize: 14
 );
+
+
+double mainHorizontalPadding = 12;

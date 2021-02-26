@@ -47,7 +47,7 @@ class _SortBarState extends State<SortBar> {
               },
               splashColor: Colors.white,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                padding: EdgeInsets.symmetric(horizontal: mainHorizontalPadding),
                 child: Row(
                   children: [
                     Icon(icons[selected], color: white, size: 14,),

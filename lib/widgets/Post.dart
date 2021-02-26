@@ -1,9 +1,14 @@
-import 'package:draw/draw.dart';
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:draw/draw.dart';
+import 'package:intl/intl.dart';
+import "package:flutter_feather_icons/flutter_feather_icons.dart";
+
 import 'package:reddite/states/posts_state.dart';
 import 'package:reddite/utils/colors.dart';
 import 'package:reddite/utils/styles.dart';
+import 'package:reddite/widgets/Button.dart';
 import 'package:reddite/widgets/PostTypes/Image.dart';
 import 'package:reddite/widgets/PostTypes/Text.dart';
 import 'package:reddite/widgets/PostTypes/Video.dart';
@@ -22,13 +27,30 @@ enum PostType {
 }
 
 
-class Post extends StatelessWidget {
+class Post extends StatefulWidget {
   final Submission post;
+  final int index;
 
   Post({
     Key key,
-    @required this.post
+    @required this.post,
+    @required this.index
   }) : super(key: key);
+
+  _PostState createState() => _PostState();
+}
+
+class _PostState extends State<Post> {
+
+  Submission post;
+  int index;
+
+  @override
+  initState() {
+    super.initState();
+    post = widget.post;
+    index = widget.index;
+  }  
 
   PostType getPostType() {
     if (post.isSelf)
@@ -58,19 +80,24 @@ class Post extends StatelessWidget {
   Widget build(BuildContext context) {
     PostType type = this.getPostType();
 
-    return Column(
-      children: [
-        titleRow(),
-        content(type),
-      ]
+    return Container(
+      margin: EdgeInsets.only(bottom: 16),
+      child: Column(
+        children: [
+          topRow(),
+          titleRow(),
+          content(type),
+          bottomRow(),
+        ]
+      )
     );
   }
 
-  Widget titleRow() {
+  Widget topRow() {
     Subreddit subreddit = postsStore.subreddits[post.subreddit.path];
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      padding: EdgeInsets.symmetric(horizontal: mainHorizontalPadding, vertical: 16),
       color: redditOrange,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -102,19 +129,102 @@ class Post extends StatelessWidget {
                 ],
               ),
               Spacer(),
-              InkWell(
-                onTap: () {},
-                child: Icon(Icons.bookmark_outline, color: white,)
+              RedditeButton(
+                child: Icon(FeatherIcons.bookmark, color: white, size: 16),
+                onPressed: () {}
               )
             ],
           ),
-          SizedBox(height: 16,),
-          Text(
-            post.title,
-            style: fontBook.copyWith(fontSize: 16),
-          ),
         ]
       ),
+    );
+  }
+
+  Widget titleRow() {
+    return (
+      Container(
+        color: darkGrey,
+        padding: EdgeInsets.symmetric(horizontal: mainHorizontalPadding, vertical: 10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              post.title,
+              style: fontBook.copyWith(fontSize: 14),
+            ),
+          ]
+        )
+      )
+    );
+  }
+
+  Widget bottomRow() {
+    return Container(
+      color: darkGrey,
+      height: 38,
+      padding: EdgeInsets.symmetric(horizontal: mainHorizontalPadding),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              RedditeButton(
+                onPressed: () async {
+                  if (post.likes != true)
+                    await post.upvote();
+                  else
+                    await post.clearVote();
+                  setState(() => {
+                    post = post
+                  });
+                },
+                child: Icon(
+                  FeatherIcons.chevronUp,
+                  color: post.likes == true ? upvoteOrange: white,
+                  size: 20
+                ),
+              ),
+              Text(
+                NumberFormat.compactCurrency(
+                  decimalDigits: 2,
+                  symbol: '',
+                ).format(post.upvotes),
+                style: fontBook.copyWith(fontSize: 11)
+              ),
+              RedditeButton(
+                onPressed: () async {
+                  if (post.likes != false)
+                    await post.downvote();
+                  else
+                    await post.clearVote();
+                  setState(() => {
+                    post = post
+                  });
+                },
+                child: Icon(
+                  FeatherIcons.chevronDown,
+                  color: post.likes == false ? downvoteBlue : white,
+                  size: 20
+                ),
+              ),
+            ]
+          ),
+          Row(
+            children: [
+              RedditeButton(
+                onPressed: () {},
+                child: Icon(FeatherIcons.link, color: redditOrange, size: 16),
+              ),
+              SizedBox(width: 10),
+              RedditeButton(
+                onPressed: () {},
+                child: Icon(FeatherIcons.messageSquare, color: white, size: 16)
+              ),
+            ],
+          )
+        ],
+      )
     );
   }
 
