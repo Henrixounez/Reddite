@@ -3,14 +3,15 @@ import 'package:flutter/widgets.dart';
 import 'package:reddite/utils/colors.dart';
 
 class RedditeLoginButton extends StatelessWidget {
+
+  final Widget child;
+  final Function onPressed;
+
   const RedditeLoginButton({
     Key key,
     this.child,
     this.onPressed,
   }) : super(key: key);
-
-  final Widget child;
-  final Function onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +63,25 @@ class RedditeButton extends StatelessWidget {
           child: child
         )
       )
+    );
+  }
+}
+
+class RedditeUploadButton extends StatelessWidget {
+
+  final Function onPressed;
+
+  const RedditeUploadButton({
+    Key key,
+    this.onPressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      child: Icon(Icons.file_upload),
+      onPressed: this.onPressed,
+      backgroundColor: redditOrange,
     );
   }
 }

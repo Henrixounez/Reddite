@@ -6,6 +6,8 @@ import 'package:reddite/states/posts_state.dart';
 import 'package:reddite/widgets/Post.dart';
 import 'package:reddite/widgets/Scaffold.dart';
 import 'package:reddite/widgets/SortBar.dart';
+import 'package:reddite/widgets/Button.dart';
+import 'package:reddite/screens/UploadScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
