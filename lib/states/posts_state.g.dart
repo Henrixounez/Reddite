@@ -121,6 +121,14 @@ mixin _$PostsState on _PostsState, Store {
     });
   }
 
+  final _$loadPostsAsyncAction = AsyncAction('_PostsState.loadPosts');
+
+  @override
+  Future<void> loadPosts({int limit = 20, bool loadMore = false}) {
+    return _$loadPostsAsyncAction
+        .run(() => super.loadPosts(limit: limit, loadMore: loadMore));
+  }
+
   final _$_PostsStateActionController = ActionController(name: '_PostsState');
 
   @override

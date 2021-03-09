@@ -39,12 +39,14 @@ class RedditeButton extends StatelessWidget {
 
   final Widget child;
   final Function onPressed;
+  final Function onLongPressed;
   final bool rounded;
 
   const RedditeButton({
     Key key,
     @required this.child,
-    @required this.onPressed,
+    this.onPressed,
+    this.onLongPressed,
     this.rounded = true,
   }) : super(key: key);
 
@@ -55,6 +57,7 @@ class RedditeButton extends StatelessWidget {
         color: Colors.transparent,
         borderRadius: rounded == true ? BorderRadius.all(Radius.circular(100)) : null,
         child: InkWell(
+          onLongPress: onLongPressed,
           onTap: onPressed,
           child: child
         )

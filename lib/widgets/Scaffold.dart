@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:reddite/states/auth.dart';
+import 'package:reddite/states/posts_state.dart';
 import 'package:reddite/utils/colors.dart';
 import 'package:reddite/utils/styles.dart';
 import 'package:reddite/widgets/Input.dart';
@@ -11,10 +14,12 @@ class RedditeScaffold extends StatelessWidget {
     Key key,
     @required this.body,
     this.showNavbar = true,
+    this.scrollController,
   }) : super(key: key);
 
   final Widget body;
   final bool showNavbar;
+  final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +55,21 @@ class RedditeScaffold extends StatelessWidget {
           ),
           SizedBox(width: 16,),
           RedditeTopInput(
-            onChange: null,
-            onSubmit: null,
+            onChange: (e) async {
+              // List<SubredditRef> list = await authStore.reddit.subreddits.searchByName(e);
+            },
+            onSubmit: (e) async {
+              if (scrollController != null)
+                await scrollController.animateTo(0, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+              Timer(Duration(milliseconds: 500), () {
+                if (e == "") {
+                  postsStore.setSubreddit("all");
+                } else {
+                  postsStore.setSubreddit(e);
+                }
+                postsStore.loadPosts();
+              });
+            },
             hintText: "Search"
           ),
         ]

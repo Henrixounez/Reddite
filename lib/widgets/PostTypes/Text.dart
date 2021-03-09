@@ -1,6 +1,7 @@
 import 'package:draw/draw.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:html_unescape/html_unescape.dart';
 import 'package:reddite/utils/colors.dart';
 import 'package:reddite/utils/styles.dart';
 
@@ -17,9 +18,11 @@ class PostText extends StatelessWidget {
         child: Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            post.selftext,
+            HtmlUnescape().convert(post.selftext),
             style: fontBook.copyWith(color: darkGrey),
             textAlign: TextAlign.start,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
           ),
         )
       );

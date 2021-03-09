@@ -1,12 +1,15 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:draw/draw.dart';
+import 'package:get/route_manager.dart';
+import 'package:html_unescape/html_unescape.dart';
 import 'package:intl/intl.dart';
 import "package:flutter_feather_icons/flutter_feather_icons.dart";
+import 'package:reddite/states/focus_post_state.dart';
 
 import 'package:reddite/states/posts_state.dart';
 import 'package:reddite/utils/colors.dart';
+import 'package:reddite/utils/routes.dart';
 import 'package:reddite/utils/styles.dart';
 import 'package:reddite/widgets/Button.dart';
 import 'package:reddite/widgets/PostTypes/Image.dart';
@@ -29,12 +32,10 @@ enum PostType {
 
 class Post extends StatefulWidget {
   final Submission post;
-  final int index;
 
   Post({
     Key key,
     @required this.post,
-    @required this.index
   }) : super(key: key);
 
   _PostState createState() => _PostState();
@@ -43,14 +44,18 @@ class Post extends StatefulWidget {
 class _PostState extends State<Post> {
 
   Submission post;
-  int index;
 
   @override
   initState() {
     super.initState();
     post = widget.post;
-    index = widget.index;
-  }  
+  }
+  
+  @override
+  void didUpdateWidget(Post oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    post = widget.post;
+  }
 
   PostType getPostType() {
     if (post.isSelf)
@@ -80,15 +85,21 @@ class _PostState extends State<Post> {
   Widget build(BuildContext context) {
     PostType type = this.getPostType();
 
-    return Container(
-      margin: EdgeInsets.only(bottom: 16),
-      child: Column(
-        children: [
-          topRow(),
-          titleRow(),
-          content(type),
-          bottomRow(),
-        ]
+    return RedditeButton(
+      onPressed: () {
+        focusPostStore.setPost(post);
+        Get.toNamed(postRoute);
+      },
+      child: Container(
+        margin: EdgeInsets.only(bottom: 16),
+        child: Column(
+          children: [
+            topRow(),
+            titleRow(),
+            content(type),
+            bottomRow(),
+          ]
+        )
       )
     );
   }
@@ -150,7 +161,7 @@ class _PostState extends State<Post> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              post.title,
+              HtmlUnescape().convert(post.title),
               style: fontBook.copyWith(fontSize: 14),
             ),
           ]

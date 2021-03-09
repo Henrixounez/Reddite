@@ -24,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return RedditeScaffold(
+      scrollController: _scrollController,
       body: StreamBuilder(
         stream: postsStore.streamController.stream,
         builder: (context, snapshot) {
@@ -49,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
           bool loadMore = (index > postsStore.contents.length - 10);
           if (loadMore && !postsStore.isLoading)
             postsStore.loadPosts(loadMore: true);
-          return Post(post: post, index: index);
+          return Post(post: post);
         },
         childCount: postsStore.contents.length
       )

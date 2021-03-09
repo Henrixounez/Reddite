@@ -94,14 +94,13 @@ class _SortBarState extends State<SortBar> {
   Widget modalBottomChoice(BuildContext context, String text, String sort) {
     return Expanded(
       child: FlatButton(
-        onPressed: () {
-          if (widget.scrollController != null) {
-            widget.scrollController.animateTo(0, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
-          }
+        onPressed: () async {
+          if (widget.scrollController != null)
+            await widget.scrollController.animateTo(0, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
           setState(() {
             selected = text;
           });
-          Timer(Duration(seconds: 1), () => postsStore.setSorting(sort));
+          Timer(Duration(milliseconds: 500), () => postsStore.setSorting(sort));
           Navigator.pop(context);
         },
         splashColor: lightText,

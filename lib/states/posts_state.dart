@@ -71,29 +71,36 @@ abstract class _PostsState with Store {
   @action
   setLoading(bool v) => this.isLoading = v;
   @action
-  setSubreddit(String v) => this.subreddit = v;
+  setSubreddit(String v) {
+      this.subreddit = v;
+  }
 
-  void loadPosts({
+  @action
+  Future<void> loadPosts({
     int limit = 20,
     bool loadMore = false
   }) async {
 
-    if (!_isInit)
-      initController();
-  
-    setLoading(true);
+    try {
+      if (!_isInit)
+        initController();
+    
+      setLoading(true);
 
-    if (!loadMore) {
-      _contents.clear();
-      _subreddits.clear();
-      _authors.clear();
+      if (!loadMore) {
+        _contents.clear();
+        _subreddits.clear();
+        _authors.clear();
+      }
+
+      String after = loadMore ? _contents.last.fullname : null;
+      Stream<UserContent> stream;
+      stream = getSortFunction(limit, after);
+      await streamController.addStream(stream);
+      setLoading(false);
+    } catch (error) {
+      print(error);
     }
-
-    String after = loadMore ? _contents.last.fullname : null;
-    Stream<UserContent> stream;
-    stream = getSortFunction(limit, after);
-    await streamController.addStream(stream);
-    setLoading(false);
   }
 
   Stream<UserContent> getSortFunction(int limit, String after) {

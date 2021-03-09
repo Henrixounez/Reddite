@@ -49,21 +49,25 @@ class _RedditeTopInput extends State<RedditeTopInput> {
                   fillColor: Colors.white,
                   hintStyle: fontBook.copyWith(color: lightText),
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.all(0),
-                  suffixIcon:IconButton(
-                    icon: Icon(
-                      FeatherIcons.search,
-                      color: redditOrange,
-                      size: 16
-                    ),
-                    onPressed: () => widget.onSubmit(controller.text),
-                  ),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+                  suffix: SizedBox(height: 20)
                 ),
                 cursorColor: lightText,
                 style: fontBook.copyWith(color: darkGrey),
                 onChanged: (String value) { widget.onChange(value); },
                 onSubmitted: (String text) { widget.onSubmit(text); },
               ),
+            ),
+            IconButton(
+              icon: Icon(
+                FeatherIcons.search,
+                color: redditOrange,
+                size: 16
+              ),
+              onPressed: () {
+                FocusScope.of(context).unfocus();
+                widget.onSubmit(controller.text);
+              },
             ),
           ]
         )
