@@ -1,16 +1,12 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:draw/draw.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get/route_manager.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:intl/intl.dart';
 import "package:flutter_feather_icons/flutter_feather_icons.dart";
 import 'package:reddite/states/focus_post_state.dart';
 
-import 'package:reddite/states/posts_state.dart';
 import 'package:reddite/utils/colors.dart';
 import 'package:reddite/utils/routes.dart';
 import 'package:reddite/utils/styles.dart';
@@ -18,7 +14,7 @@ import 'package:reddite/widgets/Button.dart';
 import 'package:reddite/widgets/PostTypes/Image.dart';
 import 'package:reddite/widgets/PostTypes/Text.dart';
 import 'package:reddite/widgets/PostTypes/Video.dart';
-import 'package:reddite/widgets/UserIcon.dart';
+import 'package:reddite/widgets/SubredditIcon.dart';
 
 enum PostType {
   Text,
@@ -132,8 +128,24 @@ class _PostState extends State<Post> {
               ),
               Spacer(),
               RedditeButton(
-                child: Icon(FeatherIcons.bookmark, color: white, size: 16),
-                onPressed: () {}
+                child: Padding(
+                  padding: EdgeInsets.all(4),
+                  child: Icon(
+                    post.saved ? FeatherIcons.check : FeatherIcons.bookmark,
+                    color: white,
+                    size: 16
+                  )
+                ),
+                onPressed: () async {
+                  if (post.saved)
+                    await post.unsave();
+                  else
+                    await post.save();
+                  post.data['saved'] = !post.saved;
+                  setState(() {
+                    post = post;
+                  });
+                }
               )
             ],
           ),
@@ -259,42 +271,6 @@ class _PostState extends State<Post> {
     return Text(
       'Type ${type.toString()} no handled yet.',
       style: fontMedium.copyWith(color: darkGrey)
-    );
-  }
-}
-
-
-class SubredditIcon extends StatelessWidget {
-  final String name;
-
-  SubredditIcon({
-    Key key,
-    @required this.name
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Observer(
-      builder: (_) => RedditeButton(
-        onPressed: () async {
-          if (postsStore.scrollController != null)
-            await postsStore.scrollController.animateTo(0, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
-          Timer(Duration(milliseconds: 500), () {
-            postsStore.setSubreddit(name.replaceFirst('r/', '').replaceAll('/', ''), true);
-            postsStore.loadPosts();
-          });
-          if (Get.currentRoute != homeRoute)
-            Get.until((route) => Get.currentRoute == homeRoute);
-        },
-        child: Container(
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(
-            color: white,
-            borderRadius: BorderRadius.all(Radius.circular(30)),
-          ),
-          child: UserIcon(iconUrl: postsStore.subreddits != null && postsStore.subreddits[name] != null ? postsStore.subreddits[name].iconImage.toString() : null)
-        ),
-      )
     );
   }
 }
