@@ -15,6 +15,7 @@ import 'package:reddite/widgets/Button.dart';
 import 'package:reddite/widgets/PostTypes/Image.dart';
 import 'package:reddite/widgets/PostTypes/Text.dart';
 import 'package:reddite/widgets/PostTypes/Video.dart';
+import 'package:reddite/widgets/UserIcon.dart';
 
 enum PostType {
   Text,
@@ -90,6 +91,7 @@ class _PostState extends State<Post> {
         focusPostStore.setPost(post);
         Get.toNamed(postRoute);
       },
+      rounded: false,
       child: Container(
         margin: EdgeInsets.only(bottom: 16),
         child: Column(
@@ -122,12 +124,7 @@ class _PostState extends State<Post> {
                   color: white,
                   borderRadius: BorderRadius.all(Radius.circular(30)),
                 ),
-                child: subreddit != null && subreddit?.iconImage.toString() != '' ? Image.network(
-                  subreddit?.iconImage.toString(),
-                  width: 30,
-                  height: 30,
-                  fit: BoxFit.contain
-                ) : SizedBox.fromSize(size: Size(30, 30)),
+                child: UserIcon(iconUrl: subreddit?.iconImage?.toString())
               ),
               SizedBox(width: 12),
               Column(
@@ -200,7 +197,7 @@ class _PostState extends State<Post> {
                 NumberFormat.compactCurrency(
                   decimalDigits: 2,
                   symbol: '',
-                ).format(post.upvotes),
+                ).format(post.upvotes).replaceAll('.00', ''),
                 style: fontBook.copyWith(fontSize: 11)
               ),
               RedditeButton(

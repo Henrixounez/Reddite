@@ -15,6 +15,13 @@ mixin _$FocusPostState on _FocusPostState, Store {
   Submission get post => (_$postComputed ??=
           Computed<Submission>(() => super.post, name: '_FocusPostState.post'))
       .value;
+  Computed<Map<String, Redditor>> _$authorsComputed;
+
+  @override
+  Map<String, Redditor> get authors => (_$authorsComputed ??=
+          Computed<Map<String, Redditor>>(() => super.authors,
+              name: '_FocusPostState.authors'))
+      .value;
 
   final _$_postAtom = Atom(name: '_FocusPostState._post');
 
@@ -29,6 +36,28 @@ mixin _$FocusPostState on _FocusPostState, Store {
     _$_postAtom.reportWrite(value, super._post, () {
       super._post = value;
     });
+  }
+
+  final _$_authorsAtom = Atom(name: '_FocusPostState._authors');
+
+  @override
+  Map<String, Redditor> get _authors {
+    _$_authorsAtom.reportRead();
+    return super._authors;
+  }
+
+  @override
+  set _authors(Map<String, Redditor> value) {
+    _$_authorsAtom.reportWrite(value, super._authors, () {
+      super._authors = value;
+    });
+  }
+
+  final _$loadAuthorAsyncAction = AsyncAction('_FocusPostState.loadAuthor');
+
+  @override
+  Future<Redditor> loadAuthor(String v) {
+    return _$loadAuthorAsyncAction.run(() => super.loadAuthor(v));
   }
 
   final _$_FocusPostStateActionController =
@@ -59,7 +88,8 @@ mixin _$FocusPostState on _FocusPostState, Store {
   @override
   String toString() {
     return '''
-post: ${post}
+post: ${post},
+authors: ${authors}
     ''';
   }
 }
