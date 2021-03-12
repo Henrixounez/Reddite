@@ -13,7 +13,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -23,21 +22,31 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return RedditeScaffold(
-      scrollController: _scrollController,
-      body: StreamBuilder(
-        stream: postsStore.streamController.stream,
-        builder: (context, snapshot) {
-          return snapshot.hasData ?
-            CustomScrollView(
-              controller: _scrollController,
-              slivers: [
-                sortBarSliver(),
-                postList(),
-              ],
-            )
-          : loading();
+    return WillPopScope(
+      onWillPop: () async {
+        if (postsStore.lastSubreddits.length > 0) {
+          postsStore.popSubreddit();
+          postsStore.loadPosts();
+          return false;
+        } else {
+          return true;
         }
+      },
+      child: RedditeScaffold(
+        body: StreamBuilder(
+          stream: postsStore.streamController.stream,
+          builder: (context, snapshot) {
+            return snapshot.hasData ?
+              CustomScrollView(
+                controller: postsStore.scrollController,
+                slivers: [
+                  sortBarSliver(),
+                  postList(),
+                ],
+              )
+            : loading();
+          }
+        )
       )
     );
   }
@@ -50,7 +59,9 @@ class _HomeScreenState extends State<HomeScreen> {
           bool loadMore = (index > postsStore.contents.length - 10);
           if (loadMore && !postsStore.isLoading)
             postsStore.loadPosts(loadMore: true);
-          return Post(post: post);
+          return Post(
+            post: post,
+          );
         },
         childCount: postsStore.contents.length
       )
@@ -64,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floating: true,
       stretch: true,
       automaticallyImplyLeading: false,
-      title: SortBar(scrollController: _scrollController),
+      title: SortBar(),
     );
   }
 

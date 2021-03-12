@@ -7,9 +7,7 @@ import 'package:reddite/utils/colors.dart';
 import 'package:reddite/utils/styles.dart';
 
 class SortBar extends StatefulWidget {
-  final ScrollController scrollController;
-
-  SortBar({Key key, this.scrollController}) : super(key: key);
+  SortBar({Key key}) : super(key: key);
 
   @override
   _SortBarState createState() => _SortBarState();
@@ -95,8 +93,8 @@ class _SortBarState extends State<SortBar> {
     return Expanded(
       child: FlatButton(
         onPressed: () async {
-          if (widget.scrollController != null)
-            await widget.scrollController.animateTo(0, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+          if (postsStore.scrollController != null)
+            await postsStore.scrollController.animateTo(0, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
           setState(() {
             selected = text;
           });

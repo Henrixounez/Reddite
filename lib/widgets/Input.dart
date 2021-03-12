@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:reddite/states/global_state.dart';
 import 'package:reddite/utils/colors.dart';
 import 'package:reddite/utils/styles.dart';
 
-class RedditeTopInput extends StatefulWidget {
+class RedditeTopInput extends StatelessWidget {
   final String hintText;
   final Function onChange;
   final Function onSubmit;
@@ -14,19 +15,7 @@ class RedditeTopInput extends StatefulWidget {
     this.hintText,
     @required this.onChange,
     @required this.onSubmit,
-  });
-
-  _RedditeTopInput createState() => _RedditeTopInput();
-}
-
-class _RedditeTopInput extends State<RedditeTopInput> {
-  final controller = TextEditingController();
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +32,9 @@ class _RedditeTopInput extends State<RedditeTopInput> {
           children: [
             Flexible(
               child: TextField(
-                controller: controller,
+                controller: globalStore.topInputController,
                 decoration: InputDecoration(
-                  hintText: widget.hintText,
+                  hintText: hintText,
                   fillColor: Colors.white,
                   hintStyle: fontBook.copyWith(color: lightText),
                   border: InputBorder.none,
@@ -54,8 +43,8 @@ class _RedditeTopInput extends State<RedditeTopInput> {
                 ),
                 cursorColor: lightText,
                 style: fontBook.copyWith(color: darkGrey),
-                onChanged: (String value) { widget.onChange(value); },
-                onSubmitted: (String text) { widget.onSubmit(text); },
+                onChanged: (String value) { onChange(value); },
+                onSubmitted: (String text) { onSubmit(text); },
               ),
             ),
             IconButton(
@@ -66,7 +55,7 @@ class _RedditeTopInput extends State<RedditeTopInput> {
               ),
               onPressed: () {
                 FocusScope.of(context).unfocus();
-                widget.onSubmit(controller.text);
+                onSubmit(globalStore.topInputController.text);
               },
             ),
           ]

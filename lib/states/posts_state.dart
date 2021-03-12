@@ -1,8 +1,11 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+
 import 'package:mobx/mobx.dart';
 import 'package:draw/draw.dart';
 import 'package:reddite/states/auth.dart';
+import 'package:reddite/states/global_state.dart';
 
 part 'posts_state.g.dart';
 
@@ -13,21 +16,16 @@ abstract class _PostsState with Store {
 
   @action
   initController() {
-    streamController.stream.listen((event) {
+    streamController.stream.listen((event) async {
       Submission content = event;
+      if (content == null)
+        return;
       content.refreshComments();
       this.addContent(content);
-      if (!_subreddits.containsKey(content.subreddit.path)) {
-        content.subreddit.populate().then((value) => _subreddits[content.subreddit.path] = value);
+      if (!subreddits.containsKey(content.subreddit.path)) {
+        this.addSubreddit(content);
+        // content.subreddit.populate().then((value) => this.addSubreddit(value, content.subreddit.path));
       }
-      // if (!_authors.containsKey(content.author)) {
-      //   authStore.reddit
-      //     .redditor(content.author)
-      //     .populate()
-      //     .then((value) {
-      //       _authors[content.author] = value;
-      //     });
-      // }
     }, onDone: () {
       setLoading(false);
     }, onError: (error) {
@@ -43,21 +41,27 @@ abstract class _PostsState with Store {
   @observable
   Map<String, Redditor> _authors = {};
   @observable
-  Map<String, Subreddit> _subreddits = {};
+  ObservableMap<String, Subreddit> subreddits = ObservableMap<String, Subreddit>.of({});
+  @observable
+  List<String> lastSubreddits = [];
   @observable
   bool isLoading = false;
   @observable
   String sorting = "hot";
   @observable
   String subreddit = "all";
+  @observable
+  ScrollController scrollController = ScrollController();
 
   @computed
   List<Submission> get contents => List.from(_contents);
   @computed
   Map<String, Redditor> get authors => _authors;
-  @computed
-  Map<String, Subreddit> get subreddits => _subreddits;
 
+  Future<void> addSubreddit(Submission content) async {
+    Subreddit sub = await content.subreddit.populate();
+    this.subreddits.addAll({content.subreddit.path: sub});
+  }
   @action
   addContent(Submission v) => this._contents.add(v);
   @action
@@ -71,8 +75,16 @@ abstract class _PostsState with Store {
   @action
   setLoading(bool v) => this.isLoading = v;
   @action
-  setSubreddit(String v) {
-      this.subreddit = v;
+  setSubreddit(String v, [bool isPush]) {
+    if (isPush ?? false)
+      this.lastSubreddits.add(this.subreddit);
+    this.subreddit = v;
+    globalStore.topInputController.text = this.subreddit;
+  }
+  @action
+  popSubreddit() {
+    this.subreddit = this.lastSubreddits.length > 0 ? this.lastSubreddits.removeLast() : 'all';
+    globalStore.topInputController.text = this.lastSubreddits.length > 0 ? this.subreddit : "";
   }
 
   @action
@@ -89,8 +101,9 @@ abstract class _PostsState with Store {
 
       if (!loadMore) {
         _contents.clear();
-        _subreddits.clear();
+        subreddits.clear();
         _authors.clear();
+        streamController.add(null);
       }
 
       String after = loadMore ? _contents.last.fullname : null;
@@ -100,6 +113,8 @@ abstract class _PostsState with Store {
       setLoading(false);
     } catch (error) {
       print(error);
+      this.popSubreddit();
+      this.loadPosts();
     }
   }
 

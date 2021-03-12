@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:draw/draw.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get/route_manager.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:intl/intl.dart';
@@ -107,8 +110,6 @@ class _PostState extends State<Post> {
   }
 
   Widget topRow() {
-    Subreddit subreddit = postsStore.subreddits[post.subreddit.path];
-
     return Container(
       padding: EdgeInsets.symmetric(horizontal: mainHorizontalPadding, vertical: 16),
       color: redditOrange,
@@ -118,14 +119,7 @@ class _PostState extends State<Post> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(
-                  color: white,
-                  borderRadius: BorderRadius.all(Radius.circular(30)),
-                ),
-                child: UserIcon(iconUrl: subreddit?.iconImage?.toString())
-              ),
+              SubredditIcon(name: post.subreddit.path),
               SizedBox(width: 12),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -265,6 +259,42 @@ class _PostState extends State<Post> {
     return Text(
       'Type ${type.toString()} no handled yet.',
       style: fontMedium.copyWith(color: darkGrey)
+    );
+  }
+}
+
+
+class SubredditIcon extends StatelessWidget {
+  final String name;
+
+  SubredditIcon({
+    Key key,
+    @required this.name
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Observer(
+      builder: (_) => RedditeButton(
+        onPressed: () async {
+          if (postsStore.scrollController != null)
+            await postsStore.scrollController.animateTo(0, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+          Timer(Duration(milliseconds: 500), () {
+            postsStore.setSubreddit(name.replaceFirst('r/', '').replaceAll('/', ''), true);
+            postsStore.loadPosts();
+          });
+          if (Get.currentRoute != homeRoute)
+            Get.until((route) => Get.currentRoute == homeRoute);
+        },
+        child: Container(
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            color: white,
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+          ),
+          child: UserIcon(iconUrl: postsStore.subreddits != null && postsStore.subreddits[name] != null ? postsStore.subreddits[name].iconImage.toString() : null)
+        ),
+      )
     );
   }
 }

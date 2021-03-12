@@ -9,10 +9,26 @@ part of 'global_state.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$GlobalState on _GlobalState, Store {
+  final _$topInputControllerAtom =
+      Atom(name: '_GlobalState.topInputController');
+
+  @override
+  TextEditingController get topInputController {
+    _$topInputControllerAtom.reportRead();
+    return super.topInputController;
+  }
+
+  @override
+  set topInputController(TextEditingController value) {
+    _$topInputControllerAtom.reportWrite(value, super.topInputController, () {
+      super.topInputController = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
-
+topInputController: ${topInputController}
     ''';
   }
 }

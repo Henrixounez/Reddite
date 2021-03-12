@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:draw/draw.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,6 +15,9 @@ abstract class _GlobalState with Store {
   String _credentials;
 
   bool get hasCredentials => _credentials != null;
+
+  @observable
+  TextEditingController topInputController = TextEditingController();
 
   Future<bool> initApp({
     String authCode

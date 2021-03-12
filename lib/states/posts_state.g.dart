@@ -23,13 +23,6 @@ mixin _$PostsState on _PostsState, Store {
           Computed<Map<String, Redditor>>(() => super.authors,
               name: '_PostsState.authors'))
       .value;
-  Computed<Map<String, Subreddit>> _$subredditsComputed;
-
-  @override
-  Map<String, Subreddit> get subreddits => (_$subredditsComputed ??=
-          Computed<Map<String, Subreddit>>(() => super.subreddits,
-              name: '_PostsState.subreddits'))
-      .value;
 
   final _$_contentsAtom = Atom(name: '_PostsState._contents');
 
@@ -61,18 +54,33 @@ mixin _$PostsState on _PostsState, Store {
     });
   }
 
-  final _$_subredditsAtom = Atom(name: '_PostsState._subreddits');
+  final _$subredditsAtom = Atom(name: '_PostsState.subreddits');
 
   @override
-  Map<String, Subreddit> get _subreddits {
-    _$_subredditsAtom.reportRead();
-    return super._subreddits;
+  ObservableMap<String, Subreddit> get subreddits {
+    _$subredditsAtom.reportRead();
+    return super.subreddits;
   }
 
   @override
-  set _subreddits(Map<String, Subreddit> value) {
-    _$_subredditsAtom.reportWrite(value, super._subreddits, () {
-      super._subreddits = value;
+  set subreddits(ObservableMap<String, Subreddit> value) {
+    _$subredditsAtom.reportWrite(value, super.subreddits, () {
+      super.subreddits = value;
+    });
+  }
+
+  final _$lastSubredditsAtom = Atom(name: '_PostsState.lastSubreddits');
+
+  @override
+  List<String> get lastSubreddits {
+    _$lastSubredditsAtom.reportRead();
+    return super.lastSubreddits;
+  }
+
+  @override
+  set lastSubreddits(List<String> value) {
+    _$lastSubredditsAtom.reportWrite(value, super.lastSubreddits, () {
+      super.lastSubreddits = value;
     });
   }
 
@@ -118,6 +126,21 @@ mixin _$PostsState on _PostsState, Store {
   set subreddit(String value) {
     _$subredditAtom.reportWrite(value, super.subreddit, () {
       super.subreddit = value;
+    });
+  }
+
+  final _$scrollControllerAtom = Atom(name: '_PostsState.scrollController');
+
+  @override
+  ScrollController get scrollController {
+    _$scrollControllerAtom.reportRead();
+    return super.scrollController;
+  }
+
+  @override
+  set scrollController(ScrollController value) {
+    _$scrollControllerAtom.reportWrite(value, super.scrollController, () {
+      super.scrollController = value;
     });
   }
 
@@ -176,11 +199,22 @@ mixin _$PostsState on _PostsState, Store {
   }
 
   @override
-  dynamic setSubreddit(String v) {
+  dynamic setSubreddit(String v, [bool isPush]) {
     final _$actionInfo = _$_PostsStateActionController.startAction(
         name: '_PostsState.setSubreddit');
     try {
-      return super.setSubreddit(v);
+      return super.setSubreddit(v, isPush);
+    } finally {
+      _$_PostsStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic popSubreddit() {
+    final _$actionInfo = _$_PostsStateActionController.startAction(
+        name: '_PostsState.popSubreddit');
+    try {
+      return super.popSubreddit();
     } finally {
       _$_PostsStateActionController.endAction(_$actionInfo);
     }
@@ -189,12 +223,14 @@ mixin _$PostsState on _PostsState, Store {
   @override
   String toString() {
     return '''
+subreddits: ${subreddits},
+lastSubreddits: ${lastSubreddits},
 isLoading: ${isLoading},
 sorting: ${sorting},
 subreddit: ${subreddit},
+scrollController: ${scrollController},
 contents: ${contents},
-authors: ${authors},
-subreddits: ${subreddits}
+authors: ${authors}
     ''';
   }
 }
