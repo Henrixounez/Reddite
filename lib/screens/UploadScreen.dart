@@ -13,7 +13,6 @@ class UploadScreenState extends State<UploadScreen> {
   @override
   Widget build(BuildContext context) {
     return RedditeScaffold(
-        showNavbar: false,
         body: Container(
             padding: EdgeInsets.all(50),
             height: MediaQuery.of(context).size.height,
