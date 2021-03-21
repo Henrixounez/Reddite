@@ -65,13 +65,13 @@ class RedditeTopInput extends StatelessWidget {
   }
 }
 
-class RedditSubmissionInput extends StatelessWidget {
+class RedditeSubmissionInput extends StatelessWidget {
   final String hintText;
   final String labelText;
   final Function validator;
   final TextEditingController controller;
 
-  const RedditSubmissionInput({
+  const RedditeSubmissionInput({
     Key key,
     this.hintText,
     @required this.labelText,
@@ -82,20 +82,28 @@ class RedditSubmissionInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-          hintText: hintText,
-          labelText: labelText,
-          fillColor: colorTheme.primaryBg,
-          hintStyle: fontBook.copyWith(color: colorTheme.primaryText),
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
-          suffix: SizedBox(height: 20)
+    return Container(
+        decoration: BoxDecoration(
+          color: colorTheme.primaryBg,
+          borderRadius: BorderRadius.all(Radius.circular(100))
         ),
-      cursorColor: colorTheme.primaryText,
-      style: fontBook.copyWith(color: colorTheme.secondaryText),
-      validator: validator
+        height: 50,
+        padding: EdgeInsets.only(left: 20),
+        child: TextFormField(
+          controller: controller,
+          decoration: InputDecoration(
+              hintText: hintText,
+              labelText: labelText,
+              fillColor: colorTheme.primaryBg,
+              hintStyle: fontBook.copyWith(color: colorTheme.primaryText),
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+              suffix: SizedBox(height: 20)
+            ),
+          cursorColor: colorTheme.primaryText,
+          style: fontBook.copyWith(color: colorTheme.secondaryText),
+          validator: validator
+        ),
     );
   }
 }

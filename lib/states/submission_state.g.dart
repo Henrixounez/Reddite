@@ -9,6 +9,13 @@ part of 'submission_state.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$SubmissionState on _SubmissionState, Store {
+  Computed<bool> _$submittedComputed;
+
+  @override
+  bool get submitted =>
+      (_$submittedComputed ??= Computed<bool>(() => super.submitted,
+              name: '_SubmissionState.submitted'))
+          .value;
   Computed<Submission> _$submitted_postComputed;
 
   @override
@@ -16,6 +23,21 @@ mixin _$SubmissionState on _SubmissionState, Store {
           Computed<Submission>(() => super.submitted_post,
               name: '_SubmissionState.submitted_post'))
       .value;
+
+  final _$_submittedAtom = Atom(name: '_SubmissionState._submitted');
+
+  @override
+  bool get _submitted {
+    _$_submittedAtom.reportRead();
+    return super._submitted;
+  }
+
+  @override
+  set _submitted(bool value) {
+    _$_submittedAtom.reportWrite(value, super._submitted, () {
+      super._submitted = value;
+    });
+  }
 
   final _$_submitted_postAtom = Atom(name: '_SubmissionState._submitted_post');
 
@@ -32,17 +54,59 @@ mixin _$SubmissionState on _SubmissionState, Store {
     });
   }
 
+  final _$titleInputControllerAtom =
+      Atom(name: '_SubmissionState.titleInputController');
+
+  @override
+  TextEditingController get titleInputController {
+    _$titleInputControllerAtom.reportRead();
+    return super.titleInputController;
+  }
+
+  @override
+  set titleInputController(TextEditingController value) {
+    _$titleInputControllerAtom.reportWrite(value, super.titleInputController,
+        () {
+      super.titleInputController = value;
+    });
+  }
+
+  final _$bodyInputControllerAtom =
+      Atom(name: '_SubmissionState.bodyInputController');
+
+  @override
+  TextEditingController get bodyInputController {
+    _$bodyInputControllerAtom.reportRead();
+    return super.bodyInputController;
+  }
+
+  @override
+  set bodyInputController(TextEditingController value) {
+    _$bodyInputControllerAtom.reportWrite(value, super.bodyInputController, () {
+      super.bodyInputController = value;
+    });
+  }
+
   final _$submitAsyncAction = AsyncAction('_SubmissionState.submit');
 
   @override
-  Future<Submission> submit(String subreddit, String title,
-      {String body = ""}) {
-    return _$submitAsyncAction
-        .run(() => super.submit(subreddit, title, body: body));
+  Future<Submission> submit() {
+    return _$submitAsyncAction.run(() => super.submit());
   }
 
   final _$_SubmissionStateActionController =
       ActionController(name: '_SubmissionState');
+
+  @override
+  dynamic setSubmitState(bool submitState) {
+    final _$actionInfo = _$_SubmissionStateActionController.startAction(
+        name: '_SubmissionState.setSubmitState');
+    try {
+      return super.setSubmitState(submitState);
+    } finally {
+      _$_SubmissionStateActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   dynamic unload() {
@@ -58,6 +122,9 @@ mixin _$SubmissionState on _SubmissionState, Store {
   @override
   String toString() {
     return '''
+titleInputController: ${titleInputController},
+bodyInputController: ${bodyInputController},
+submitted: ${submitted},
 submitted_post: ${submitted_post}
     ''';
   }

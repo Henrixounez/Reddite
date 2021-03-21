@@ -10,6 +10,8 @@ import 'package:reddite/widgets/Post.dart';
 import 'package:reddite/widgets/PostComment.dart';
 import 'package:reddite/widgets/Scaffold.dart';
 
+import '../states/focus_post_state.dart';
+
 class PostScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
