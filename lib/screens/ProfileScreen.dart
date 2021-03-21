@@ -27,9 +27,15 @@ class ProfileScreen extends StatelessWidget {
         return true;
       },
       child: RedditeScaffold(
-        showNavbar: false,
         extendBodyBehindAppBar: true,
-        customNavbar: AppBar(backgroundColor: Colors.transparent, shadowColor: Colors.transparent),
+        customNavbar: AppBar(
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
         body: StreamBuilder(
           stream: postsStore.streamController.stream,
           builder: (context, snapshot) {
