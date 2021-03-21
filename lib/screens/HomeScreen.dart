@@ -2,7 +2,9 @@ import 'package:draw/draw.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:reddite/screens/SubmissionScreen.dart';
+import 'package:get/route_manager.dart';
 
+import 'package:reddite/utils/routes.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'package:reddite/states/posts_state.dart';
@@ -45,6 +47,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   context,
                   MaterialPageRoute(builder: (context) => SubmissionScreen()),
                 );
+                // Doesnt work
+//                Get.toNamed(submissionRoute);
               },
             ),
         ),
