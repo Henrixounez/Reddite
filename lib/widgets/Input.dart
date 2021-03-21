@@ -67,25 +67,26 @@ class RedditeTopInput extends StatelessWidget {
 
 class RedditSubmissionInput extends StatelessWidget {
   final String hintText;
-  final Function onChange;
-  final Function onSubmit;
+  final String labelText;
+  final Function validator;
   final TextEditingController controller;
 
   const RedditSubmissionInput({
     Key key,
     this.hintText,
-    @required this.onChange,
-    @required this.onSubmit,
+    @required this.labelText,
     @required this.controller,
+    @required this.validator,
   }) : super(key: key);
 
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: controller,
       decoration: InputDecoration(
           hintText: hintText,
+          labelText: labelText,
           fillColor: colorTheme.primaryBg,
           hintStyle: fontBook.copyWith(color: colorTheme.primaryText),
           border: InputBorder.none,
@@ -94,8 +95,7 @@ class RedditSubmissionInput extends StatelessWidget {
         ),
       cursorColor: colorTheme.primaryText,
       style: fontBook.copyWith(color: colorTheme.secondaryText),
-      onChanged: (String value) { onChange(value); },
-      onSubmitted: (String text) { onSubmit(text); },
+      validator: validator
     );
   }
 }
