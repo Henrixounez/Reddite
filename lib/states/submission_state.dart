@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:draw/draw.dart';
 import 'package:reddite/states/auth.dart';
@@ -15,6 +16,12 @@ abstract class _SubmissionState with Store {
   @observable
   Submission _submitted_post = null;
 
+  @observable
+  TextEditingController titleInputController = TextEditingController();
+
+  @observable
+  TextEditingController bodyInputController = TextEditingController();
+  
   @computed
   bool get submitted => _submitted;
 
@@ -30,6 +37,8 @@ abstract class _SubmissionState with Store {
   unload() {
     this._submitted_post = null;
     this._submitted = false;
+    this.titleInputController.clear();
+    this.bodyInputController.clear();
   }
 
   @action

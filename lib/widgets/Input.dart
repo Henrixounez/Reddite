@@ -64,3 +64,38 @@ class RedditeTopInput extends StatelessWidget {
     );
   }
 }
+
+class RedditSubmissionInput extends StatelessWidget {
+  final String hintText;
+  final Function onChange;
+  final Function onSubmit;
+  final TextEditingController controller;
+
+  const RedditSubmissionInput({
+    Key key,
+    this.hintText,
+    @required this.onChange,
+    @required this.onSubmit,
+    @required this.controller,
+  }) : super(key: key);
+
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+          hintText: hintText,
+          fillColor: colorTheme.primaryBg,
+          hintStyle: fontBook.copyWith(color: colorTheme.primaryText),
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+          suffix: SizedBox(height: 20)
+        ),
+      cursorColor: colorTheme.primaryText,
+      style: fontBook.copyWith(color: colorTheme.secondaryText),
+      onChanged: (String value) { onChange(value); },
+      onSubmitted: (String text) { onSubmit(text); },
+    );
+  }
+}
