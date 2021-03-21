@@ -73,6 +73,13 @@ mixin _$Auth on _Auth, Store {
     return _$setMeAsyncAction.run(() => super.setMe());
   }
 
+  final _$refreshMeAsyncAction = AsyncAction('_Auth.refreshMe');
+
+  @override
+  Future<void> refreshMe() {
+    return _$refreshMeAsyncAction.run(() => super.refreshMe());
+  }
+
   final _$_AuthActionController = ActionController(name: '_Auth');
 
   @override

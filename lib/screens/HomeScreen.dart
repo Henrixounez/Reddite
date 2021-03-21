@@ -55,13 +55,18 @@ class _HomeScreenState extends State<HomeScreen> {
     return  SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) {
-          Submission post = postsStore.contents[index];
           bool loadMore = (index > postsStore.contents.length - 10);
-          if (loadMore && !postsStore.isLoading)
+          if (loadMore && !postsStore.isLoading) {
             postsStore.loadPosts(loadMore: true);
-          return Post(
-            post: post,
-          );
+          }
+          if (postsStore.contents[index] is Submission) {
+            Submission post = postsStore.contents[index];
+            return Post(
+              post: post,
+            );
+          } else {
+            return SizedBox.shrink();
+          }
         },
         childCount: postsStore.contents.length
       )

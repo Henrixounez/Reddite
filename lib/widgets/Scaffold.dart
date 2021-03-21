@@ -19,16 +19,21 @@ class RedditeScaffold extends StatelessWidget {
     Key key,
     @required this.body,
     this.showNavbar = true,
+    this.extendBodyBehindAppBar = false,
+    this.customNavbar,
   }) : super(key: key);
 
   final Widget body;
   final bool showNavbar;
+  final Widget customNavbar;
+  final bool extendBodyBehindAppBar;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: showNavbar ? appBar() : null,
+        extendBodyBehindAppBar: extendBodyBehindAppBar,
+        appBar: showNavbar ? appBar() : customNavbar != null ? customNavbar : null,
         body: this.body,
       )
     );
@@ -44,7 +49,7 @@ class RedditeScaffold extends StatelessWidget {
         children: [
           RedditeButton(
             onPressed: () {
-              print('Pressed user icon');
+              Get.toNamed(profileRoute);
             },
             rounded: true,
             child: Observer(
@@ -57,7 +62,7 @@ class RedditeScaffold extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(32))
                 ),
                 child: authStore.me.icon != null ?
-                  Image.network('${authStore.me.icon}', width: 32, height: 32, fit: BoxFit.contain,) :
+                  Image.network('${authStore.me.icon}', width: 32, height: 32, fit: BoxFit.contain) :
                   SizedBox.fromSize(size: Size(32, 32)),
               )
             ),

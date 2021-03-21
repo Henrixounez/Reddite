@@ -60,7 +60,7 @@ class _SortBarState extends State<SortBar> {
                 )
               )
             )
-          )
+          ),
         ]
       )
     );

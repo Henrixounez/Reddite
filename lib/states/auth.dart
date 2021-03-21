@@ -64,6 +64,12 @@ abstract class _Auth with Store {
     Redditor redditor = await reddit.user.me();
     _me = redditor;
   }
+
+  @action
+  Future<void> refreshMe() async {
+    Redditor redditor = await reddit.redditor(_me.displayName).populate();
+    _me = redditor;
+  }
 }
 
 final authStore = Auth();

@@ -66,22 +66,6 @@ class _PostCommentState extends State<PostComment> {
     );
   }
 
-  String formatDatetime(DateTime time) {
-    Duration diff = (DateTime.now()).difference(time);
-    
-    if (diff.inSeconds < 60) {
-      return '${diff.inSeconds}s';
-    } else if (diff.inMinutes < 60) {
-      return '${diff.inMinutes}min';
-    } else if (diff.inHours < 24) {
-      return '${diff.inHours}h';
-    } else if (diff.inDays < 365) {
-      return '${diff.inDays}d';
-    } else {
-      return '${(diff.inDays / 365.25).floor()}y';
-    }
-  }
-
   void toggleCollapse() async {
     setState(() {
       collapsed = !(collapsed != null ? collapsed : true);
@@ -148,7 +132,7 @@ class _PostCommentState extends State<PostComment> {
         Row(
           children: [
             Text('u/${comment.author}', style: fontMedium.apply(color: colorTheme.primary)),
-            Text(' - ${formatDatetime(comment.createdUtc)}', style: fontBook.apply(color: colorTheme.primaryText))
+            Text(' - ${timeAgo(comment.createdUtc)}', style: fontBook.apply(color: colorTheme.primaryText))
           ],
         )
       ],

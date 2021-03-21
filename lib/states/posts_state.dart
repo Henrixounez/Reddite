@@ -17,14 +17,18 @@ abstract class _PostsState with Store {
   @action
   initController() {
     streamController.stream.listen((event) async {
-      Submission content = event;
-      if (content == null)
+      if (event == null)
         return;
-      content.refreshComments();
-      this.addContent(content);
-      if (!subreddits.containsKey(content.subreddit.path)) {
-        this.addSubreddit(content);
-        // content.subreddit.populate().then((value) => this.addSubreddit(value, content.subreddit.path));
+      if (event is Submission) {
+        Submission content = event;
+        content.refreshComments();
+        this.addContent(content);
+        if (!subreddits.containsKey(content.subreddit.path)) {
+          this.addSubreddit(content);
+        }
+      } else if (event is Comment) {
+        Comment content = event;
+        this.addContent(content);
       }
     }, onDone: () {
       setLoading(false);
@@ -37,7 +41,7 @@ abstract class _PostsState with Store {
   StreamController<UserContent> streamController = StreamController.broadcast();
 
   @observable
-  List<Submission> _contents = [];
+  List<UserContent> _contents = [];
   @observable
   Map<String, Redditor> _authors = {};
   @observable
@@ -54,7 +58,7 @@ abstract class _PostsState with Store {
   ScrollController scrollController = ScrollController();
 
   @computed
-  List<Submission> get contents => List.from(_contents);
+  List<UserContent> get contents => List.from(_contents);
   @computed
   Map<String, Redditor> get authors => _authors;
 
@@ -63,7 +67,7 @@ abstract class _PostsState with Store {
     this.subreddits.addAll({content.subreddit.path: sub});
   }
   @action
-  addContent(Submission v) => this._contents.add(v);
+  addContent(UserContent v) => this._contents.add(v);
   @action
   setSorting(String v) {
     bool shouldRefresh = this.sorting != v;
@@ -87,6 +91,52 @@ abstract class _PostsState with Store {
     globalStore.topInputController.text = this.lastSubreddits.length > 0 ? this.subreddit : "";
   }
 
+  initLoading(bool loadMore) {
+    if (!_isInit)
+      initController();
+  
+    setLoading(true);
+
+    if (!loadMore) {
+      _contents.clear();
+      subreddits.clear();
+      _authors.clear();
+      streamController.add(null);
+    }
+  }
+
+  String getFullName(UserContent content) {
+    if (content is Submission) {
+      return content.fullname;
+    } else if (content is Comment) {
+      return content.fullname;
+    } else {
+      return '';
+    }
+  }
+
+  @action
+  Future<void> loadProfilePosts({
+    int limit = 20,
+    bool loadMore = false
+  }) async {
+    try {
+      initLoading(loadMore);
+
+      String after = loadMore ? getFullName(_contents.last) : null;
+      Stream<UserContent> stream;
+      stream = authStore.me.submissions.newest(
+        limit: limit,
+        after: after,
+      );
+      await streamController.addStream(stream);
+      setLoading(false);
+
+    } catch (error) {
+      print(error);
+    }
+  }
+
   @action
   Future<void> loadPosts({
     int limit = 20,
@@ -94,19 +144,9 @@ abstract class _PostsState with Store {
   }) async {
 
     try {
-      if (!_isInit)
-        initController();
-    
-      setLoading(true);
+      initLoading(loadMore);
 
-      if (!loadMore) {
-        _contents.clear();
-        subreddits.clear();
-        _authors.clear();
-        streamController.add(null);
-      }
-
-      String after = loadMore ? _contents.last.fullname : null;
+      String after = loadMore ? getFullName(_contents.last) : null;
       Stream<UserContent> stream;
       stream = getSortFunction(limit, after);
       await streamController.addStream(stream);

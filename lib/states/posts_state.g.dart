@@ -9,11 +9,11 @@ part of 'posts_state.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$PostsState on _PostsState, Store {
-  Computed<List<Submission>> _$contentsComputed;
+  Computed<List<UserContent>> _$contentsComputed;
 
   @override
-  List<Submission> get contents =>
-      (_$contentsComputed ??= Computed<List<Submission>>(() => super.contents,
+  List<UserContent> get contents =>
+      (_$contentsComputed ??= Computed<List<UserContent>>(() => super.contents,
               name: '_PostsState.contents'))
           .value;
   Computed<Map<String, Redditor>> _$authorsComputed;
@@ -27,13 +27,13 @@ mixin _$PostsState on _PostsState, Store {
   final _$_contentsAtom = Atom(name: '_PostsState._contents');
 
   @override
-  List<Submission> get _contents {
+  List<UserContent> get _contents {
     _$_contentsAtom.reportRead();
     return super._contents;
   }
 
   @override
-  set _contents(List<Submission> value) {
+  set _contents(List<UserContent> value) {
     _$_contentsAtom.reportWrite(value, super._contents, () {
       super._contents = value;
     });
@@ -144,6 +144,15 @@ mixin _$PostsState on _PostsState, Store {
     });
   }
 
+  final _$loadProfilePostsAsyncAction =
+      AsyncAction('_PostsState.loadProfilePosts');
+
+  @override
+  Future<void> loadProfilePosts({int limit = 20, bool loadMore = false}) {
+    return _$loadProfilePostsAsyncAction
+        .run(() => super.loadProfilePosts(limit: limit, loadMore: loadMore));
+  }
+
   final _$loadPostsAsyncAction = AsyncAction('_PostsState.loadPosts');
 
   @override
@@ -166,7 +175,7 @@ mixin _$PostsState on _PostsState, Store {
   }
 
   @override
-  dynamic addContent(Submission v) {
+  dynamic addContent(UserContent v) {
     final _$actionInfo = _$_PostsStateActionController.startAction(
         name: '_PostsState.addContent');
     try {
