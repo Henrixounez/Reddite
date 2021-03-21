@@ -1,11 +1,37 @@
 import 'package:flutter/material.dart';
 
-const Color redditOrange = Color(0xFFFF5700);
-const Color lightOrange = Color(0xFFFF9100);
-const Color white = Color(0xFFFFFFFF);
-const Color lightText = Color(0xFFC2C2C2);
-const Color darkGrey = Color(0xFF303030);
-const Color lightGrey = Color(0xFFF8F8F8);
+class ColorTheme {
+  ColorTheme({
+    @required this.primary,
+    @required this.secondary,
+    @required this.primaryBg,
+    @required this.secondaryBg,
+    @required this.primaryText,
+    @required this.secondaryText,
+    @required this.upvote,
+    @required this.downvote,
+    @required this.icon,
+  });
 
-const Color upvoteOrange = Color(0xffFF8B60);
-const Color downvoteBlue = Color(0xFF9494FF);
+  final Color primary;
+  final Color secondary;
+  final Color primaryBg;
+  final Color secondaryBg;
+  final Color primaryText;
+  final Color secondaryText;
+  final Color upvote;
+  final Color downvote;
+  final Color icon;
+}
+
+ColorTheme colorTheme = ColorTheme(
+  primary: Color(0xFFFF5700), // Reddit Orange
+  secondary: Color(0xFFFF9100), // Light Orange
+  primaryBg: Color(0xFFFFFFFF), // White
+  secondaryBg: Color(0xFF303030), // Dark Grey
+  primaryText: Color(0xFFC2C2C2), // Light Text
+  secondaryText: Color(0xFF303030), // Dark Grey
+  upvote: Color(0xffFF8B60), // Upvote Orange
+  downvote: Color(0xFF9494FF), // Downvote Blue
+  icon: Color(0xFFFFFFFF), // White
+);

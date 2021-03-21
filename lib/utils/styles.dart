@@ -1,19 +1,19 @@
 import 'package:flutter/widgets.dart';
 import 'package:reddite/utils/colors.dart';
 
-const fontTitle = TextStyle(
+TextStyle fontTitle = TextStyle(
   fontFamily: 'BerlinSansFB',
-  color: white,
+  color: colorTheme.primaryBg,
   fontSize: 14
 );
-const fontMedium = TextStyle(
+TextStyle fontMedium = TextStyle(
   fontFamily: 'FranklinGothicMedium',
-  color: white,
+  color: colorTheme.primaryBg,
   fontSize: 14
 );
-const fontBook = TextStyle(
+TextStyle fontBook = TextStyle(
   fontFamily: 'FranklinGothicBook',
-  color: white,
+  color: colorTheme.primaryBg,
   fontSize: 14
 );
 

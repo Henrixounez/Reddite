@@ -24,7 +24,7 @@ class PostImage extends StatelessWidget {
             return child;
           return Center(
             child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(redditOrange),
+              valueColor: AlwaysStoppedAnimation<Color>(colorTheme.primary),
               value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes : null,
             ),
           );

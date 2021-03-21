@@ -25,7 +25,7 @@ class RedditeLoginButton extends StatelessWidget {
       color: Colors.transparent,
       shape: RoundedRectangleBorder(
         side: BorderSide(
-          color: white,
+          color: colorTheme.primaryBg,
           width: 3,
           style: BorderStyle.solid
         ),

@@ -25,8 +25,8 @@ class _LoginScreenState extends State<LoginScreen> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              redditOrange,
-              lightOrange
+              colorTheme.primary,
+              colorTheme.secondary
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter

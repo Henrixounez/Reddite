@@ -34,7 +34,7 @@ class UserIcon extends StatelessWidget {
           return Icon(
             FeatherIcons.user,
             size: 30,
-            color: darkGrey,
+            color: colorTheme.secondaryText,
           );
         },
       );
@@ -45,7 +45,7 @@ class UserIcon extends StatelessWidget {
         child: Icon(
           FeatherIcons.box,
           size: 20,
-          color: darkGrey,
+          color: colorTheme.secondaryText,
         )
       );
     }

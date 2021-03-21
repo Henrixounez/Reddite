@@ -49,11 +49,11 @@ class MyApp extends StatelessWidget {
       getPages: screens.keys.map((key) => GetPage(name: key, page: () => screens[key])).toList(),
       theme: ThemeData(
         brightness: Brightness.light,
-        backgroundColor: white,
-        primaryColor: redditOrange,
-        accentColor: redditOrange,
+        backgroundColor: colorTheme.primaryBg,
+        primaryColor: colorTheme.primary,
+        accentColor: colorTheme.primary,
         appBarTheme: AppBarTheme(
-          color: redditOrange,
+          color: colorTheme.primary,
           brightness: Brightness.light
         ),
       ),

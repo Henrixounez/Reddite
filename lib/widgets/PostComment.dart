@@ -139,7 +139,7 @@ class _PostCommentState extends State<PostComment> {
         Container(
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
-            color: white,
+            color: colorTheme.primaryBg,
             borderRadius: BorderRadius.all(Radius.circular(30)),
           ),
           child: UserIcon(iconUrl: focusPostStore?.authors[comment?.author]?.icon)
@@ -147,8 +147,8 @@ class _PostCommentState extends State<PostComment> {
         SizedBox(width: 8),
         Row(
           children: [
-            Text('u/${comment.author}', style: fontMedium.apply(color: redditOrange)),
-            Text(' - ${formatDatetime(comment.createdUtc)}', style: fontBook.apply(color: lightText))
+            Text('u/${comment.author}', style: fontMedium.apply(color: colorTheme.primary)),
+            Text(' - ${formatDatetime(comment.createdUtc)}', style: fontBook.apply(color: colorTheme.primaryText))
           ],
         )
       ],
@@ -173,12 +173,12 @@ class _PostCommentState extends State<PostComment> {
           children: [
             Text(
               (comment.replies?.comments?.length ?? 0).toString(),
-              style: fontBook.copyWith(fontSize: 11, color: darkGrey)
+              style: fontBook.copyWith(fontSize: 11, color: colorTheme.secondaryText)
             ),
             SizedBox(width: 4),
             Icon(
               FeatherIcons.messageSquare,
-              color: darkGrey,
+              color: colorTheme.secondaryText,
               size: 16,
             ),
           ]
@@ -200,7 +200,7 @@ class _PostCommentState extends State<PostComment> {
                 padding: EdgeInsets.all(2),
                 child: Icon(
                   FeatherIcons.chevronUp,
-                  color: comment.likes == true ? upvoteOrange : darkGrey,
+                  color: comment.likes == true ? colorTheme.upvote : colorTheme.secondaryText,
                   size: 20
                 ),
               )
@@ -212,7 +212,7 @@ class _PostCommentState extends State<PostComment> {
                   decimalDigits: 2,
                   symbol: '',
                 ).format(comment.upvotes).replaceAll('.00', ''),
-                style: fontBook.copyWith(fontSize: 11, color: darkGrey,),
+                style: fontBook.copyWith(fontSize: 11, color: colorTheme.secondaryText,),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -230,7 +230,7 @@ class _PostCommentState extends State<PostComment> {
                 padding: EdgeInsets.all(2),
                 child: Icon(
                   FeatherIcons.chevronDown,
-                  color: comment.likes == false ? downvoteBlue : darkGrey,
+                  color: comment.likes == false ? colorTheme.downvote : colorTheme.secondaryText,
                   size: 20
                 ),
               )

@@ -47,7 +47,7 @@ class RedditeScaffold extends StatelessWidget {
               width: 32,
               clipBehavior: Clip.antiAlias,
               decoration: BoxDecoration(
-                color: white,
+                color: colorTheme.primaryBg,
                 borderRadius: BorderRadius.all(Radius.circular(32))
               ),
               child: authStore.me.icon != null ?

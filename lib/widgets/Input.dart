@@ -22,7 +22,7 @@ class RedditeTopInput extends StatelessWidget {
     return Flexible(
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: colorTheme.primaryBg,
           borderRadius: BorderRadius.all(Radius.circular(100))
         ),
         height: 32,
@@ -35,14 +35,14 @@ class RedditeTopInput extends StatelessWidget {
                 controller: globalStore.topInputController,
                 decoration: InputDecoration(
                   hintText: hintText,
-                  fillColor: Colors.white,
-                  hintStyle: fontBook.copyWith(color: lightText),
+                  fillColor: colorTheme.primaryBg,
+                  hintStyle: fontBook.copyWith(color: colorTheme.primaryText),
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
                   suffix: SizedBox(height: 20)
                 ),
-                cursorColor: lightText,
-                style: fontBook.copyWith(color: darkGrey),
+                cursorColor: colorTheme.primaryText,
+                style: fontBook.copyWith(color: colorTheme.secondaryText),
                 onChanged: (String value) { onChange(value); },
                 onSubmitted: (String text) { onSubmit(text); },
               ),
@@ -50,7 +50,7 @@ class RedditeTopInput extends StatelessWidget {
             IconButton(
               icon: Icon(
                 FeatherIcons.search,
-                color: redditOrange,
+                color: colorTheme.primary,
                 size: 16
               ),
               onPressed: () {

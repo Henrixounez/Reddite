@@ -108,7 +108,7 @@ class _PostState extends State<Post> {
   Widget topRow() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: mainHorizontalPadding, vertical: 16),
-      color: redditOrange,
+      color: colorTheme.primary,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -132,7 +132,7 @@ class _PostState extends State<Post> {
                   padding: EdgeInsets.all(4),
                   child: Icon(
                     post.saved ? FeatherIcons.check : FeatherIcons.bookmark,
-                    color: white,
+                    color: colorTheme.icon,
                     size: 16
                   )
                 ),
@@ -157,7 +157,7 @@ class _PostState extends State<Post> {
   Widget titleRow() {
     return (
       Container(
-        color: darkGrey,
+        color: colorTheme.secondaryBg,
         padding: EdgeInsets.symmetric(horizontal: mainHorizontalPadding, vertical: 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -175,7 +175,7 @@ class _PostState extends State<Post> {
 
   Widget bottomRow() {
     return Container(
-      color: darkGrey,
+      color: colorTheme.secondaryBg,
       height: 38,
       padding: EdgeInsets.symmetric(horizontal: mainHorizontalPadding),
       child: Row(
@@ -195,7 +195,7 @@ class _PostState extends State<Post> {
                 },
                 child: Icon(
                   FeatherIcons.chevronUp,
-                  color: post.likes == true ? upvoteOrange: white,
+                  color: post.likes == true ? colorTheme.upvote: colorTheme.icon,
                   size: 20
                 ),
               ),
@@ -218,7 +218,7 @@ class _PostState extends State<Post> {
                 },
                 child: Icon(
                   FeatherIcons.chevronDown,
-                  color: post.likes == false ? downvoteBlue : white,
+                  color: post.likes == false ? colorTheme.downvote : colorTheme.icon,
                   size: 20
                 ),
               ),
@@ -228,12 +228,12 @@ class _PostState extends State<Post> {
             children: [
               RedditeButton(
                 onPressed: () {},
-                child: Icon(FeatherIcons.link, color: redditOrange, size: 16),
+                child: Icon(FeatherIcons.link, color: colorTheme.primary, size: 16),
               ),
               SizedBox(width: 10),
               RedditeButton(
                 onPressed: () {},
-                child: Icon(FeatherIcons.messageSquare, color: white, size: 16)
+                child: Icon(FeatherIcons.messageSquare, color: colorTheme.icon, size: 16)
               ),
             ],
           )
@@ -270,7 +270,7 @@ class _PostState extends State<Post> {
   Widget notHandled(PostType type) {
     return Text(
       'Type ${type.toString()} no handled yet.',
-      style: fontMedium.copyWith(color: darkGrey)
+      style: fontMedium.copyWith(color: colorTheme.secondaryText)
     );
   }
 }

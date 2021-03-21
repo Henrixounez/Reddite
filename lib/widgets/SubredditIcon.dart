@@ -34,7 +34,7 @@ class SubredditIcon extends StatelessWidget {
         child: Container(
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
-            color: white,
+            color: colorTheme.primaryBg,
             borderRadius: BorderRadius.all(Radius.circular(30)),
           ),
           child: UserIcon(iconUrl: postsStore.subreddits != null && postsStore.subreddits[name] != null ? postsStore.subreddits[name].iconImage.toString() : null)

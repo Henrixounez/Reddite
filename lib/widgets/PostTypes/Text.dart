@@ -19,7 +19,7 @@ class PostText extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Text(
             HtmlUnescape().convert(post.selftext),
-            style: fontBook.copyWith(color: darkGrey),
+            style: fontBook.copyWith(color: colorTheme.secondaryText),
             textAlign: TextAlign.start,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,

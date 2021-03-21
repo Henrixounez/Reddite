@@ -15,19 +15,24 @@ class SortBar extends StatefulWidget {
 
 class _SortBarState extends State<SortBar> {
   Map<String, IconData> icons = {
-    'Hot': Icons.local_fire_department,
-    'New': Icons.new_releases,
-    'Top': Icons.equalizer,
-    'Controversial': Icons.bolt,
-    'Rising': Icons.trending_up,
+    'hot': Icons.local_fire_department,
+    'new': Icons.new_releases,
+    'top': Icons.equalizer,
+    'controversial': Icons.bolt,
+    'rising': Icons.trending_up,
   };
-
-  String selected = 'Hot'; 
+  Map<String, String> nameDisplay = {
+    'hot': 'Hot',
+    'new': 'New',
+    'top': 'Top',
+    'controversial': 'Controversial',
+    'rising': 'Rising',
+  };
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: darkGrey,
+      color: colorTheme.secondaryBg,
       height: 36,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -43,14 +48,14 @@ class _SortBarState extends State<SortBar> {
                   backgroundColor: Colors.transparent
                 );
               },
-              splashColor: Colors.white,
+              splashColor: colorTheme.primaryBg,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: mainHorizontalPadding),
                 child: Row(
                   children: [
-                    Icon(icons[selected], color: white, size: 14,),
+                    Icon(icons[postsStore.sorting], color: colorTheme.icon, size: 14,),
                     SizedBox(width: 5),
-                    Text(selected, style: fontBook.copyWith(fontSize: 11)),
+                    Text(nameDisplay[postsStore.sorting], style: fontBook.copyWith(fontSize: 11)),
                   ]
                 )
               )
@@ -65,8 +70,9 @@ class _SortBarState extends State<SortBar> {
     return Container(
       height: 300,
       margin: EdgeInsets.symmetric(horizontal: 5),
+      padding: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
-        color: darkGrey,
+        color: colorTheme.secondaryBg,
         borderRadius: BorderRadius.vertical(top: Radius.circular(10))
       ),
       child: Column(
@@ -79,48 +85,44 @@ class _SortBarState extends State<SortBar> {
               style: fontBook
             ),
           ),
-          modalBottomChoice(context, 'Hot', 'hot'),
-          modalBottomChoice(context, 'New', 'newest'),
-          modalBottomChoice(context, 'Top', 'top'),
-          modalBottomChoice(context, 'Controversial', 'controversial'),
-          modalBottomChoice(context, 'Rising', 'rising'),
+          modalBottomChoice(context, 'hot'),
+          modalBottomChoice(context, 'new'),
+          modalBottomChoice(context, 'top'),
+          modalBottomChoice(context, 'controversial'),
+          modalBottomChoice(context, 'rising'),
         ],
       )
     );
   }
 
-  Widget modalBottomChoice(BuildContext context, String text, String sort) {
+  Widget modalBottomChoice(BuildContext context, String sort) {
     return Expanded(
-      child: FlatButton(
+      child: TextButton(
         onPressed: () async {
           if (postsStore.scrollController != null)
             await postsStore.scrollController.animateTo(0, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
-          setState(() {
-            selected = text;
-          });
           Timer(Duration(milliseconds: 500), () => postsStore.setSorting(sort));
           Navigator.pop(context);
         },
-        splashColor: lightText,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
                 Icon(
-                  icons[text],
-                  color: text == selected ? white : lightText,
+                  icons[sort],
+                  color: sort == postsStore.sorting ? colorTheme.icon : colorTheme.primaryText,
                 ),
                 SizedBox(width: 10,),
                 Text(
-                  text,
+                  nameDisplay[sort],
                   style: fontBook.apply(
-                    color: text == selected ? white : lightText
+                    color: sort == postsStore.sorting ? colorTheme.icon : colorTheme.primaryText
                   )
                 ),
               ],
             ),
-            if (text == selected)
+            if (sort == postsStore.sorting)
               Icon(Icons.check, color: Colors.blue),
           ]
         )
