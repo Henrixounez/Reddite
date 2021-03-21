@@ -23,7 +23,7 @@ class ProfileScreen extends StatelessWidget {
 
     return WillPopScope(
       onWillPop: () async {
-        postsStore.loadPosts();
+        await postsStore.loadPosts();
         return true;
       },
       child: RedditeScaffold(

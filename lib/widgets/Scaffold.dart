@@ -159,7 +159,13 @@ class _AppBar extends StatelessWidget {
   }
 }
 
-class RedditeScaffold extends StatelessWidget {
+
+class RedditeScaffold extends StatefulWidget {
+  final Widget body;
+  final bool showNavbar;
+  final Widget customNavbar;
+  final bool extendBodyBehindAppBar;
+
   const RedditeScaffold({
     Key key,
     @required this.body,
@@ -168,25 +174,130 @@ class RedditeScaffold extends StatelessWidget {
     this.customNavbar,
   }) : super(key: key);
 
-  final Widget body;
-  final bool showNavbar;
-  final Widget customNavbar;
-  final bool extendBodyBehindAppBar;
+  _RedditeScaffoldState createState() => _RedditeScaffoldState();
+}
+
+class _RedditeScaffoldState extends State<RedditeScaffold> with SingleTickerProviderStateMixin {
+  AnimationController _animationController;
+  Animation _secondaryNavigationAnimation;
+  Animation _rotationAnimation;
+
+  double _degreesToRadiant(double degree) {
+    const double unitRadiant = 57.295779513;
+    return degree / unitRadiant;
+  }
+
+  @override
+  void initState() {
+    _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 150));
+    _secondaryNavigationAnimation = Tween(begin: 0.0, end: 1.0).animate(_animationController);
+    _rotationAnimation = Tween<double>(begin: 0.0, end: 45.0).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeIn));
+    super.initState();
+    _animationController.addListener(() {setState(() {});});
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        extendBodyBehindAppBar: extendBodyBehindAppBar,
+        extendBodyBehindAppBar: widget.extendBodyBehindAppBar,
         endDrawerEnableOpenDragGesture: false,
         appBar:
-          customNavbar != null ? customNavbar :
-          showNavbar ? PreferredSize(
+          widget.customNavbar != null ? widget.customNavbar :
+          widget.showNavbar ? PreferredSize(
             preferredSize: Size.fromHeight(50.0),
             child: _AppBar()
           ) : null,
-        body: this.body,
+        body: widget.body,
         drawer: _Drawer(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        floatingActionButton: SizedBox.fromSize(
+          size: Size(250, 500),
+          child: Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.bottomCenter,
+            children: <Widget>[
+              Positioned(
+                bottom: 30,
+                right: -170,
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                child: Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: <Widget>[
+                    _secondaryNavigationAnimation.value != 0 ?
+                    Transform.translate(
+                      offset: Offset.fromDirection(_degreesToRadiant(270), _secondaryNavigationAnimation.value * 160),
+                      child: Opacity(
+                        opacity: _secondaryNavigationAnimation.value,
+                        child: FloatingActionButton(
+                          heroTag: 'post-image',
+                          tooltip: 'Post an image',
+                          backgroundColor: Color(0xff77dbc7),
+                          onPressed: () => {},
+                          child: Icon(
+                            FeatherIcons.video,
+                            color: Colors.white,
+                          ),
+                        )
+                      ),
+                    ) : SizedBox.shrink(),
+                    _secondaryNavigationAnimation.value != 0 ?
+                    Transform.translate(
+                      offset: Offset.fromDirection(_degreesToRadiant(270), _secondaryNavigationAnimation.value * 240),
+                      child: Opacity(
+                        opacity: _secondaryNavigationAnimation.value,
+                        child: FloatingActionButton(
+                          heroTag: 'post-video',
+                          tooltip: 'Post a video',
+                          backgroundColor: Colors.red,
+                          onPressed: () => {},
+                          child: Icon(
+                            FeatherIcons.image,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ) : SizedBox.shrink(),
+                    _secondaryNavigationAnimation.value != 0 ?
+                    Transform.translate(
+                      offset: Offset.fromDirection(_degreesToRadiant(270), _secondaryNavigationAnimation.value * 80),
+                      child: Opacity(
+                        opacity: _secondaryNavigationAnimation.value,
+                        child: FloatingActionButton(
+                          heroTag: 'post-link',
+                          tooltip: 'Post a link',
+                          backgroundColor: Color(0xfffac62c),
+                          onPressed: () => {},
+                          child: Icon(
+                            FeatherIcons.link,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ) : SizedBox.shrink(),
+                    Transform(
+                      transform: Matrix4.rotationZ(_degreesToRadiant(_rotationAnimation.value)),
+                      alignment: Alignment.center,
+                      child: FloatingActionButton(
+                        heroTag: 'post-open-close',
+                        backgroundColor: Color(0xfff38f26),
+                        onPressed: () => {
+                          if (_animationController.isCompleted) { _animationController.reverse() }
+                          else { _animationController.forward() }
+                        },
+                        child: Icon(
+                          FeatherIcons.plus,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ]
+                )
+              )
+            ]
+          )
+        ),
       )
     );
   }
