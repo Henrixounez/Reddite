@@ -15,8 +15,11 @@ Future<Null> main() async {
 
   getLinksStream().listen((event) async {
     try {
-      if (await globalStore.initApp(authCode: Uri.parse(event).queryParameters['code']))
-        startScreen = homeRoute;
+      if (await globalStore.initApp(authCode: Uri.parse(event).queryParameters['code'])) {
+        try {
+          Get.toNamed(homeRoute);
+        } catch (e) {}
+      }
     } catch (e) {
       print(e);
     }
