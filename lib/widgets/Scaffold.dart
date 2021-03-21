@@ -11,6 +11,7 @@ import 'package:reddite/states/posts_state.dart';
 import 'package:reddite/utils/colors.dart';
 import 'package:reddite/utils/routes.dart';
 import 'package:reddite/utils/styles.dart';
+import 'package:reddite/widgets/Button.dart';
 import 'package:reddite/widgets/Input.dart';
 
 class RedditeScaffold extends StatelessWidget {
@@ -41,19 +42,25 @@ class RedditeScaffold extends StatelessWidget {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Observer(
-            builder: (_) => Container(
-              height: 32,
-              width: 32,
-              clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(
-                color: colorTheme.primaryBg,
-                borderRadius: BorderRadius.all(Radius.circular(32))
-              ),
-              child: authStore.me.icon != null ?
-                Image.network('${authStore.me.icon}', width: 32, height: 32, fit: BoxFit.contain,) :
-                SizedBox.fromSize(size: Size(32, 32)),
-            )
+          RedditeButton(
+            onPressed: () {
+              print('Pressed user icon');
+            },
+            rounded: true,
+            child: Observer(
+              builder: (_) => Container(
+                height: 32,
+                width: 32,
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  color: colorTheme.primaryBg,
+                  borderRadius: BorderRadius.all(Radius.circular(32))
+                ),
+                child: authStore.me.icon != null ?
+                  Image.network('${authStore.me.icon}', width: 32, height: 32, fit: BoxFit.contain,) :
+                  SizedBox.fromSize(size: Size(32, 32)),
+              )
+            ),
           ),
           SizedBox(width: 16,),
           RedditeTopInput(
