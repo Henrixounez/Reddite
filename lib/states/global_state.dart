@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:mobx/mobx.dart';
 import 'package:draw/draw.dart';
+import 'package:reddite/utils/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
@@ -63,6 +65,7 @@ abstract class _GlobalState with Store {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     this._credentials = null;
     prefs.setString('credentials', null);
+    Get.toNamed(loginRoute);
   }
 }
 
