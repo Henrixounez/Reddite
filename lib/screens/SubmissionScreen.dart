@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:reddite/utils/colors.dart';
 import 'package:reddite/widgets/Scaffold.dart';
 import 'package:reddite/utils/colors.dart';
 
-class UploadScreen extends StatefulWidget {
+import '../utils/colors.dart';
+
+class SubmissionScreen extends StatefulWidget {
   @override
-  UploadScreenState createState() => UploadScreenState();
+  SubmissionScreenState createState() => SubmissionScreenState();
 }
 
-class UploadScreenState extends State<UploadScreen> {
+class SubmissionScreenState extends State<SubmissionScreen> {
   @override
   Widget build(BuildContext context) {
     return RedditeScaffold(
@@ -18,7 +19,7 @@ class UploadScreenState extends State<UploadScreen> {
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-                color: darkGrey,
+                color: colorTheme.secondaryBg,
             ),
             child: null,
         )

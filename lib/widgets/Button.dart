@@ -67,12 +67,12 @@ class RedditeButton extends StatelessWidget {
   }
 }
 
-class RedditeUploadButton extends StatelessWidget {
+class RedditeSubmissionButton extends StatelessWidget {
 
   final Function onPressed;
   final bool visible;
 
-  const RedditeUploadButton({
+  const RedditeSubmissionButton({
     Key key,
     this.visible = true,
     this.onPressed,
@@ -84,7 +84,7 @@ class RedditeUploadButton extends StatelessWidget {
       child: FloatingActionButton(
         child: Icon(Icons.file_upload),
         onPressed: this.onPressed,
-        backgroundColor: redditOrange,
+        backgroundColor: colorTheme.primary,
       ),
       visible: this.visible,
     );
