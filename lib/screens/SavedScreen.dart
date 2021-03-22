@@ -6,7 +6,7 @@ import 'package:reddite/states/posts_state.dart';
 import 'package:reddite/utils/colors.dart';
 import 'package:reddite/utils/styles.dart';
 import 'package:reddite/widgets/Post.dart';
-import 'package:reddite/widgets/Scaffold.dart';
+import 'package:reddite/widgets/Scaffold/Scaffold.dart';
 import 'package:reddite/widgets/SortBar.dart';
 
 class SavedScreen extends StatelessWidget{

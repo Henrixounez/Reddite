@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:reddite/utils/colors.dart';
 import 'package:reddite/utils/reddit_secret.dart';
 import 'package:reddite/widgets/Button.dart';
-import 'package:reddite/widgets/Scaffold.dart';
+import 'package:reddite/widgets/Scaffold/Scaffold.dart';
 
 class LoginScreen extends StatefulWidget {
   @override

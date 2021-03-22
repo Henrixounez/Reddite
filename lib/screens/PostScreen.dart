@@ -9,7 +9,7 @@ import 'package:reddite/utils/functions.dart';
 
 import 'package:reddite/widgets/Post.dart';
 import 'package:reddite/widgets/PostComment.dart';
-import 'package:reddite/widgets/Scaffold.dart';
+import 'package:reddite/widgets/Scaffold/Scaffold.dart';
 
 class PostScreen extends StatelessWidget {
   @override

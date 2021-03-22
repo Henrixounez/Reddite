@@ -6,7 +6,7 @@ import 'package:reddite/states/submission_state.dart';
 import 'package:reddite/utils/colors.dart';
 import 'package:reddite/widgets/Form.dart';
 
-import 'package:reddite/widgets/Scaffold.dart';
+import 'package:reddite/widgets/Scaffold/Scaffold.dart';
 
 class SubmissionScreen extends StatelessWidget {
   @override

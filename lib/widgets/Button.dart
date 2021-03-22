@@ -15,7 +15,7 @@ class RedditeLoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
+    return TextButton(
       child: Padding(
         padding: EdgeInsets.symmetric(
           vertical: 15
@@ -23,14 +23,20 @@ class RedditeLoginButton extends StatelessWidget {
         child: this.child
       ),
       onPressed: this.onPressed,
-      color: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: colorTheme.primaryBg,
-          width: 3,
-          style: BorderStyle.solid
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(Colors.transparent),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30)
+          )
         ),
-        borderRadius: BorderRadius.circular(30),
+        side: MaterialStateProperty.all(
+          BorderSide(
+            color: colorTheme.primaryBg,
+            width: 3,
+            style: BorderStyle.solid
+          )
+        ),
       ),
     );
   }

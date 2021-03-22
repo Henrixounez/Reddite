@@ -12,7 +12,7 @@ import 'package:reddite/utils/styles.dart';
 import 'package:reddite/widgets/Button.dart';
 import 'package:reddite/widgets/CommentContent.dart';
 import 'package:reddite/widgets/Post.dart';
-import 'package:reddite/widgets/Scaffold.dart';
+import 'package:reddite/widgets/Scaffold/Scaffold.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override

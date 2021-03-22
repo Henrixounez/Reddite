@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 
 import 'package:reddite/states/posts_state.dart';
 import 'package:reddite/widgets/Post.dart';
-import 'package:reddite/widgets/Scaffold.dart';
+import 'package:reddite/widgets/Scaffold/Scaffold.dart';
 import 'package:reddite/widgets/SortBar.dart';
 
 class HomeScreen extends StatefulWidget {
