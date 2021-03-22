@@ -23,7 +23,7 @@ class ProfileScreen extends StatelessWidget {
 
     return WillPopScope(
       onWillPop: () async {
-        await postsStore.loadPosts();
+        postsStore.loadPosts();
         return true;
       },
       child: RedditeScaffold(
@@ -34,7 +34,10 @@ class ProfileScreen extends StatelessWidget {
           shadowColor: Colors.transparent,
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            onPressed: () => Navigator.pop(context),
+            onPressed: () async {
+              postsStore.loadPosts();
+              Navigator.pop(context);
+            }
           ),
         ),
         body: StreamBuilder(

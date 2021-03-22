@@ -67,7 +67,7 @@ class _Drawer extends StatelessWidget {
                 'Saved',
                 style: fontMedium.copyWith(color: colorTheme.secondaryText)
               ),
-              onTap: () => {}
+              onTap: () => Get.toNamed(savedRoute)
             ),
             Expanded(
               child: Align(

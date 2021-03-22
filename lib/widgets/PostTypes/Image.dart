@@ -13,10 +13,13 @@ class PostImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String url = post.preview.length > 0 ?
+      post.preview[0].source.url.toString() :
+      post.url.toString();
     return Container(
       height: findNeededHeight(context),
       child: Image.network(
-        post.preview[0].source.url.toString(),
+        url,
         width: MediaQuery.of(context).size.width,
         fit: BoxFit.fitWidth,
         loadingBuilder: (context, child, loadingProgress) {
@@ -34,8 +37,9 @@ class PostImage extends StatelessWidget {
   }
 
   double findNeededHeight(BuildContext context) {
-    double width = post.preview[0].source.width.toDouble();
-    double height = post.preview[0].source.height.toDouble();
+    bool hasPreview = post.preview.length > 0;
+    double width = hasPreview ? post.preview[0].source.width.toDouble() : (post.data['thumbnail_height'] as int).toDouble();
+    double height = hasPreview ? post.preview[0].source.height.toDouble() : (post.data['thumbnail_width'] as int).toDouble();
     double screenWidth = MediaQuery.of(context).size.width;
 
     return (width < screenWidth) ?

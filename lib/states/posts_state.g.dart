@@ -144,6 +144,14 @@ mixin _$PostsState on _PostsState, Store {
     });
   }
 
+  final _$loadSavedPostsAsyncAction = AsyncAction('_PostsState.loadSavedPosts');
+
+  @override
+  Future<void> loadSavedPosts({int limit = 20, bool loadMore = false}) {
+    return _$loadSavedPostsAsyncAction
+        .run(() => super.loadSavedPosts(limit: limit, loadMore: loadMore));
+  }
+
   final _$loadProfilePostsAsyncAction =
       AsyncAction('_PostsState.loadProfilePosts');
 

@@ -116,6 +116,28 @@ abstract class _PostsState with Store {
   }
 
   @action
+  Future<void> loadSavedPosts({
+    int limit = 20,
+    bool loadMore = false
+  }) async {
+    try {
+      initLoading(loadMore);
+
+      String after = loadMore ? getFullName(_contents.last) : null;
+      Stream<UserContent> stream;
+      stream = authStore.me.saved(
+        limit: limit,
+        after: after
+      );
+      await streamController.addStream(stream);
+      setLoading(false);
+
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  @action
   Future<void> loadProfilePosts({
     int limit = 20,
     bool loadMore = false
