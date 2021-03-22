@@ -23,7 +23,7 @@ class _Drawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return (
       Drawer(
-        child: Column(
+        child: ListView(
           children: <Widget>[
             Container(
               height: 150.0,
