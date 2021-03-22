@@ -9,6 +9,9 @@ import 'package:reddite/utils/colors.dart';
 import 'package:reddite/utils/styles.dart';
 
 
+// Submission Form
+//
+// Display and Manage inputs for the Submission Screen's Form
 class SubmissionForm extends StatefulWidget {
   @override
   SubmissionFormState createState() {
@@ -37,6 +40,7 @@ class SubmissionFormState extends State<SubmissionForm> {
     );
   }
 
+  // Input for the Title of the Submission
   Widget titleInput() {
     return Container(
       color: colorTheme.ternaryBg,
@@ -54,6 +58,7 @@ class SubmissionFormState extends State<SubmissionForm> {
     );
   }
 
+  // Multiline Input for the Submission (If is Text)
   Widget bodyInput() {
     return Expanded(
       child: Container(
@@ -73,6 +78,7 @@ class SubmissionFormState extends State<SubmissionForm> {
     );
   }
 
+  // Single line Input for the Submission (If is URL)
   Widget urlInput() {
     return Expanded(
       child: Container(
@@ -92,6 +98,7 @@ class SubmissionFormState extends State<SubmissionForm> {
     );
   }
 
+  // Button to submit Submission and send it to Reddit
   Widget submitButton() {
     return Container(
       margin: EdgeInsets.only(bottom: 30),

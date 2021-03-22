@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:reddite/utils/colors.dart';
 
+// Fonts used in the application
+
 TextStyle fontTitle = TextStyle(
   fontFamily: 'BerlinSansFB',
   color: colorTheme.primaryBg,

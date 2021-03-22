@@ -4,6 +4,11 @@ import 'package:reddite/states/auth.dart';
 
 part 'focus_post_state.g.dart';
 
+// Focus Post State
+//
+// Holds information about the currently focused post
+// (When a post is clicked)
+
 class FocusPostState = _FocusPostState with _$FocusPostState;
 
 abstract class _FocusPostState with Store {
@@ -17,16 +22,20 @@ abstract class _FocusPostState with Store {
   @computed
   Map<String, Redditor> get authors => _authors;
 
+  // Set focused post (When clicking on it from subreddit view)
   @action
   setPost(Submission v) {
     this._post = v;
   }
+
+  // Unload current post, clear any data
   @action
   unload() {
     this._post = null;
     this._authors.clear();
   }
 
+  // Load author of post or replies
   @action
   Future<Redditor> loadAuthor(String v) async {
     try {

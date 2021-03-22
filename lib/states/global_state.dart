@@ -11,6 +11,11 @@ import 'package:reddite/utils/reddit_secret.dart';
 
 part 'global_state.g.dart';
 
+// Global State
+//
+// Main state to handle user session
+// Allows to login or logout from the app and Reddit
+
 class GlobalState = _GlobalState with _$GlobalState;
 
 abstract class _GlobalState with Store {
@@ -21,6 +26,7 @@ abstract class _GlobalState with Store {
   @observable
   TextEditingController topInputController = TextEditingController();
 
+  // Init application with a authCode provided by Reddit's Oauth
   Future<bool> initApp({
     String authCode
   }) async {
@@ -47,6 +53,7 @@ abstract class _GlobalState with Store {
     return false;
   }
 
+  // Check credentials given by user
   Future<void> checkCredentials() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String credentials = prefs.getString('credentials') ?? null;
@@ -55,6 +62,7 @@ abstract class _GlobalState with Store {
     }
   }
 
+  // Logout by clearing saved credentials and redirect to login page 
   Future<void> logout() async {
     Reddit reddit = await Reddit.createUntrustedReadOnlyInstance(
       clientId: clientId,

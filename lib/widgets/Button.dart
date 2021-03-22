@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:reddite/utils/colors.dart';
 
+// Big Button used for the Login Page
+//
+// Transparent Button with big font size, transparent background
+// and rounded thick white border
+
 class RedditeLoginButton extends StatelessWidget {
 
   final Widget child;
@@ -42,6 +47,11 @@ class RedditeLoginButton extends StatelessWidget {
   }
 }
 
+// Reddite Button
+//
+// Wrapper for all Buttons to show ripple and handle presses
+// Can be made rounded and have the color changed
+// Handle press or longPress
 class RedditeButton extends StatelessWidget {
 
   final Widget child;
@@ -71,30 +81,6 @@ class RedditeButton extends StatelessWidget {
           child: child
         )
       )
-    );
-  }
-}
-
-class RedditeSubmissionButton extends StatelessWidget {
-
-  final Function onPressed;
-  final bool visible;
-
-  const RedditeSubmissionButton({
-    Key key,
-    this.visible = true,
-    this.onPressed,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Visibility(
-      child: FloatingActionButton(
-        child: Icon(Icons.file_upload),
-        onPressed: this.onPressed,
-        backgroundColor: colorTheme.primary,
-      ),
-      visible: this.visible,
     );
   }
 }

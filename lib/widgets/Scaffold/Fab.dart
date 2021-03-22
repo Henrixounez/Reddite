@@ -6,6 +6,12 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/route_manager.dart';
 import 'package:reddite/utils/routes.dart';
 
+// Reddite Fab
+//
+// Main Fab used in the Scaffold
+// Is at Bottom Right of screen and can be opened to show 2 Buttons that
+// redirect to Submission Screen to create either a Post with Text or URL
+
 class RedditeFab extends StatefulWidget {
   @override
   _RedditeFabState createState() => _RedditeFabState();
@@ -21,6 +27,7 @@ class _RedditeFabState extends State<RedditeFab> with SingleTickerProviderStateM
     return degree / unitRadiant;
   }
 
+  // Initialize the animations for opening/closing the Fabs
   @override
   void initState() {
     _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 150));

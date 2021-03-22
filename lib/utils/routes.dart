@@ -5,6 +5,9 @@ import 'package:reddite/screens/ProfileScreen.dart';
 import 'package:reddite/screens/SavedScreen.dart';
 import 'package:reddite/screens/SubmissionScreen.dart';
 
+// Routes
+// Defines the routes paths and the associated Screen Widget
+
 const String homeRoute = '/';
 const String loginRoute = '/login';
 const String postRoute = '/post';

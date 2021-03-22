@@ -29,7 +29,14 @@ enum PostType {
   Imgur
 }
 
-
+// Post
+//
+// Handles and dispatch the Post types to their own PostTypes Widgets
+// Can display:
+//   - Text
+//   - Image
+//   - Gifs
+//   - Videos
 class Post extends StatefulWidget {
   final Submission post;
 
@@ -51,12 +58,14 @@ class _PostState extends State<Post> {
     post = widget.post;
   }
   
+  // Update state with the new Post
   @override
   void didUpdateWidget(Post oldWidget) {
     super.didUpdateWidget(oldWidget);
     post = widget.post;
   }
 
+  // Find PostType from Post's data
   PostType getPostType() {
     if (post.isSelf)
       return PostType.Text;
@@ -105,6 +114,8 @@ class _PostState extends State<Post> {
     );
   }
 
+  // Top Row with informations about the Subreddit and the Post's Author
+  // and a button to bookmark the Post
   Widget topRow() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: mainHorizontalPadding, vertical: 16),
@@ -154,6 +165,7 @@ class _PostState extends State<Post> {
     );
   }
 
+  // Row to show the Post's Title
   Widget titleRow() {
     return (
       Container(
@@ -173,6 +185,9 @@ class _PostState extends State<Post> {
     );
   }
 
+  // Row to show the Post's number of likes and have 2 buttons
+  // to Upvote or Downvote the Post.
+  // Have also Link/Reply buttons but are not used 
   Widget bottomRow() {
     return Container(
       color: colorTheme.secondaryBg,
@@ -242,6 +257,7 @@ class _PostState extends State<Post> {
     );
   }
 
+  // Dispatch and Display the Post to the correct PostTypes Widget
   Widget content(PostType type) {
     switch (type) {
       case PostType.Text:

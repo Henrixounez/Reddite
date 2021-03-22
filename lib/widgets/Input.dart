@@ -5,6 +5,10 @@ import 'package:reddite/states/global_state.dart';
 import 'package:reddite/utils/colors.dart';
 import 'package:reddite/utils/styles.dart';
 
+// Reddite Top Input
+//
+// Input at the top of the screen used in the default AppBar
+// Is used to search and access other Subreddits
 class RedditeTopInput extends StatelessWidget {
   final String hintText;
   final Function onChange;
@@ -65,6 +69,9 @@ class RedditeTopInput extends StatelessWidget {
   }
 }
 
+// Reddite Submission Input
+//
+// Input used in the Submission Screen's Form
 class RedditeSubmissionInput extends StatelessWidget {
   final String hintText;
   final String labelText;

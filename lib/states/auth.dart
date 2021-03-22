@@ -6,6 +6,11 @@ import 'package:reddite/utils/reddit_secret.dart';
 
 part 'auth.g.dart';
 
+// Auth State
+//
+// State that handles the authentication to the DRAW / Reddit API
+// It also holds important data about the DRAW Instance and current user
+
 class Auth = _Auth with _$Auth;
 
 abstract class _Auth with Store {
@@ -29,6 +34,7 @@ abstract class _Auth with Store {
     this.reddit = reddit;
   }
 
+  // New authentication to DRAW
   @action
   createInstalledFlow(String authCode) {
     final Reddit reddit = Reddit.createInstalledFlowInstance(
@@ -39,6 +45,7 @@ abstract class _Auth with Store {
     this.reddit = reddit;
   }
 
+  // Restore session from previously generated token
   @action
   restoreInstalledFlow(String credentials) {
     final Reddit reddit = Reddit.restoreInstalledAuthenticatedInstance(
@@ -50,6 +57,7 @@ abstract class _Auth with Store {
     this.reddit = reddit;
   }
 
+  // Authorize client for credentials
   @action
   Future<void> authorizeClient(String authCode) async {
     reddit.auth.url(['*'], "reddite-auth");
@@ -59,12 +67,14 @@ abstract class _Auth with Store {
     prefs.setString('credentials', credentials);
   }
 
+  // Set current user
   @action
   Future<void> setMe() async {
     Redditor redditor = await reddit.user.me();
     _me = redditor;
   }
 
+  // Refresh current user data
   @action
   Future<void> refreshMe() async {
     Redditor redditor = await reddit.redditor(_me.displayName).populate();

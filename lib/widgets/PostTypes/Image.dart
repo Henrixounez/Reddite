@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:reddite/utils/colors.dart';
 
+// Post Image
+//
+// Shows an Image from a Post
 class PostImage extends StatelessWidget {
   final Submission post;
 
@@ -36,6 +39,9 @@ class PostImage extends StatelessWidget {
     );
   }
 
+  // Computes the needed height given an aspect ratio
+  // It is useful to keep the height of the Widget when the Image is loading
+  // or have been unloaded because it is outside of current scroll
   double findNeededHeight(BuildContext context) {
     bool hasPreview = post.preview.length > 0;
     double width = hasPreview ? post.preview[0].source.width.toDouble() : (post.data['thumbnail_height'] as int).toDouble();

@@ -8,6 +8,10 @@ import 'package:reddite/utils/colors.dart';
 import 'package:reddite/utils/routes.dart';
 import 'package:reddite/utils/styles.dart';
 
+// Reddite Drawer
+//
+// Main Drawer with Buttons to access Profile/Saved Screen or to Logout
+
 class RedditeDrawer extends StatelessWidget {
   const RedditeDrawer({ Key key }) : super(key: key);
 

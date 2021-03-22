@@ -12,6 +12,11 @@ import 'auth.dart';
 
 part 'submission_state.g.dart';
 
+// Submission State
+//
+// Hold informations for the Form to create a new Post
+// and handles the submission process
+
 class SubmissionState = _SubmissionState with _$SubmissionState;
 
 abstract class _SubmissionState with Store {
@@ -47,6 +52,7 @@ abstract class _SubmissionState with Store {
     this._submitted = submitState;
   }
 
+  // Clear all data from the form and submission
   @action
   unload() {
     this._submitted_post = null;
@@ -57,6 +63,10 @@ abstract class _SubmissionState with Store {
     this.urlInputController.clear();
   }
 
+  // Submit a Post to the currently focused subreddit
+  // isSelf defines if the post is a Text or URL type
+  // Sends the post to Reddit via DRAW, then refreshes the subreddit
+  // and redirect to focus the newly created Post 
   @action
   Future<Submission> submit(bool isSelf) async {
     try {

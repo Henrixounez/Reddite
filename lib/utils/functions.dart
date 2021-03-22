@@ -1,3 +1,4 @@
+// Function to flatten array of arrays
 List<T> flatten<T>(List arr) => 
   arr.fold([], (value, element) => 
    [
@@ -5,6 +6,7 @@ List<T> flatten<T>(List arr) =>
      ...(element is List ? flatten(element) : [element])
    ]);
 
+// Get the String for Duration since a DateTime
 String timeAgo(DateTime time) {
   Duration diff = (DateTime.now()).difference(time);
   

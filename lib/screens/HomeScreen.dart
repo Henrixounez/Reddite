@@ -7,6 +7,13 @@ import 'package:reddite/widgets/Post.dart';
 import 'package:reddite/widgets/Scaffold/Scaffold.dart';
 import 'package:reddite/widgets/SortBar.dart';
 
+// Home Screen
+//
+// Main page that display currently selected Subreddit's posts
+// with a StreamBuilder
+// Uses Slivers to display both infinite posts and a SortBar which
+// appear when scrolling a little bit up
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -17,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    // Load posts from currently selected subreddit
     postsStore.loadPosts();
   }
 
@@ -51,6 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // Main list of posts, it is updated by the StreamBuilder
+  // with the new content available from the PostsStore
   Widget postList() {
     return  SliverList(
       delegate: SliverChildBuilderDelegate(
@@ -73,6 +83,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // Making the SortBar accessible by scrolling a little bit up
+  // instead of needing to go all the way up
   Widget sortBarSliver() {
     return SliverAppBar(
       titleSpacing: 0,
@@ -84,6 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // Rotating loading circle
   Widget loading() {
     return Center(
       child: CircularProgressIndicator(),

@@ -8,6 +8,10 @@ import 'package:reddite/utils/reddit_secret.dart';
 import 'package:reddite/widgets/Button.dart';
 import 'package:reddite/widgets/Scaffold/Scaffold.dart';
 
+// Login Screen
+//
+// Page with a button that redirects to Reddit Oauth for authentication
+
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -18,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return RedditeScaffold(
       showNavbar: false,
+      showFab: false,
       body: Container(
         padding: EdgeInsets.all(50),
         height: MediaQuery.of(context).size.height,

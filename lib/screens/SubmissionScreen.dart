@@ -8,6 +8,12 @@ import 'package:reddite/widgets/Form.dart';
 
 import 'package:reddite/widgets/Scaffold/Scaffold.dart';
 
+// Submission Screen
+//
+// Shows the Form to create a new Submission in the current focused subreddit
+// It can be a Text or a URL Submission
+// (Image not handled by DRAW API)
+
 class SubmissionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

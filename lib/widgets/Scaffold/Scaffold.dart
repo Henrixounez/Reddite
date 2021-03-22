@@ -5,6 +5,12 @@ import 'package:reddite/widgets/Scaffold/Drawer.dart';
 import 'package:reddite/widgets/Scaffold/Fab.dart';
 import 'package:reddite/widgets/Scaffold/AppBar.dart';
 
+// Reddite Scaffold
+//
+// Main Scaffold used in the App
+// Can be customized to show or not the default Navbar or Appbar
+// AppBar can also be customized with an other AppBar
+
 class RedditeScaffold extends StatelessWidget{
   final Widget body;
   final bool showNavbar;

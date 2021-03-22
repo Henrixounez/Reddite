@@ -9,6 +9,10 @@ import 'package:reddite/widgets/Post.dart';
 import 'package:reddite/widgets/Scaffold/Scaffold.dart';
 import 'package:reddite/widgets/SortBar.dart';
 
+// Saved Screen
+//
+// Shows the connected user's saved posts (bookmarks)
+
 class SavedScreen extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
@@ -52,6 +56,8 @@ class SavedScreen extends StatelessWidget{
     );
   }
 
+  // Main list of posts, it is updated by the StreamBuilder
+  // with the new content available from the PostsStore
   Widget postList() {
     return  SliverList(
       delegate: SliverChildBuilderDelegate(
@@ -74,6 +80,8 @@ class SavedScreen extends StatelessWidget{
     );
   }
 
+  // Making the SortBar accessible by scrolling a little bit up
+  // instead of needing to go all the way up
   Widget sortBarSliver() {
     return SliverAppBar(
       titleSpacing: 0,
@@ -85,6 +93,7 @@ class SavedScreen extends StatelessWidget{
     );
   }
 
+  // Rotating loading circle
   Widget loading() {
     return Center(
       child: CircularProgressIndicator(),

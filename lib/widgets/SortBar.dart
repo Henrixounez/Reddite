@@ -6,6 +6,12 @@ import 'package:reddite/states/posts_state.dart';
 import 'package:reddite/utils/colors.dart';
 import 'package:reddite/utils/styles.dart';
 
+// Sort Bar
+//
+// Used in main Subreddit View as a SliverAppBar
+// Allows to select a sorting for the Subreddit
+// Hot/New/Top/Controversial/Rising
+
 class SortBar extends StatefulWidget {
   SortBar({Key key}) : super(key: key);
 
@@ -66,6 +72,7 @@ class _SortBarState extends State<SortBar> {
     );
   }
 
+  // Modal Bottom Sheet to select the sorting type
   Widget buildModalBottom(BuildContext context) {
     return Container(
       height: 300,
@@ -95,6 +102,8 @@ class _SortBarState extends State<SortBar> {
     );
   }
 
+  // Choice of the Modal Bottom Sheet for a sorting type
+  // Have the Icon, Name of the sorting and shows if it is the currently selected
   Widget modalBottomChoice(BuildContext context, String sort) {
     return Expanded(
       child: TextButton(

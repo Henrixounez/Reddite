@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:video_provider/video_provider.dart';
 
+// Post Video
+//
+// Shows a Video from a Post
+
 class PostVideo extends StatefulWidget {
   final Submission post;
   final bool isGif;
@@ -21,6 +25,7 @@ class PostVideo extends StatefulWidget {
 class _PostVideoState extends State<PostVideo> {
   Uri videoUrl;
 
+  // We initialize VideoProvider with the URL of the Video of the Post
   @override
   void initState() {
     super.initState();

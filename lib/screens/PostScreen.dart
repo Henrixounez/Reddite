@@ -11,6 +11,12 @@ import 'package:reddite/widgets/Post.dart';
 import 'package:reddite/widgets/PostComment.dart';
 import 'package:reddite/widgets/Scaffold/Scaffold.dart';
 
+// Post Screen
+//
+// Screen that display currently focused post after clicking on it
+// Shows the post and its replies, each reply can be expanded to show
+// its own replies
+
 class PostScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -47,6 +53,7 @@ class PostScreen extends StatelessWidget {
     }
   }
 
+  // Generating top replies list
   List<Widget> commentList(List<dynamic> comments) {
     return flatten<Widget>(comments.toList().map((dynamic e) {
       if (e is Comment) {

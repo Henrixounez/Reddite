@@ -5,6 +5,9 @@ import 'package:html_unescape/html_unescape.dart';
 import 'package:reddite/utils/colors.dart';
 import 'package:reddite/utils/styles.dart';
 
+// Post Text
+//
+// Shows a Text from a Post
 class PostText extends StatelessWidget {
   final Submission post;
 

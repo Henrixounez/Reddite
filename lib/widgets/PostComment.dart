@@ -13,6 +13,10 @@ import 'package:reddite/utils/styles.dart';
 import 'package:reddite/widgets/Button.dart';
 import 'package:reddite/widgets/UserIcon.dart';
 
+// Post Comment
+//
+// Show a Post's Reply and allows to expand it to show its own replies
+
 class PostComment extends StatefulWidget {
   final Comment comment;
 
@@ -36,6 +40,7 @@ class _PostCommentState extends State<PostComment> {
     loadAuthor();
   }
 
+  // Load author to get its profile picture
   loadAuthor() async {
     Redditor _author = focusPostStore.authors.containsKey(widget.comment.author) ?
       focusPostStore.authors[widget.comment.author] :
@@ -48,6 +53,7 @@ class _PostCommentState extends State<PostComment> {
     }
   }
 
+  // Loads and Display replies of the current comment when is uncollapsed
   Future<List<Widget>> replies(List<dynamic> comments) async {
     return flatten<Widget>(
       (await Future.wait(
@@ -66,6 +72,7 @@ class _PostCommentState extends State<PostComment> {
     );
   }
 
+  // Toggle between collapsed or uncollapsed
   void toggleCollapse() async {
     setState(() {
       collapsed = !(collapsed != null ? collapsed : true);
@@ -117,6 +124,7 @@ class _PostCommentState extends State<PostComment> {
     );
   }
 
+  // Top Infos with the comment's author and creation date
   Widget topRow(Comment comment) {
     return Row(
       children: [
@@ -139,6 +147,7 @@ class _PostCommentState extends State<PostComment> {
     );
   }
 
+  // Content with the body of the comment
   Widget contentRow(Comment comment) {
     return Row(
       children: [
@@ -149,6 +158,8 @@ class _PostCommentState extends State<PostComment> {
     );
   }
 
+  // Bottom infos to show number of likes and replies and 
+  // have Buttons to Upvote/Downvote
   Widget bottomRow(Comment comment) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,

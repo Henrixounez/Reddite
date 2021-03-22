@@ -5,6 +5,11 @@ import 'package:reddite/utils/colors.dart';
 
 import 'package:flutter/widgets.dart';
 
+// User Icon
+//
+// Wrapper to show a User Profile Picture from network
+// Handles errors if the icon is not available
+
 class UserIcon extends StatelessWidget {
 
   final String iconUrl;

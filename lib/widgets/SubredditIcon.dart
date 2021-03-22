@@ -9,6 +9,11 @@ import 'package:reddite/utils/routes.dart';
 import 'package:reddite/widgets/Button.dart';
 import 'package:reddite/widgets/UserIcon.dart';
 
+// Subreddit Icon
+//
+// Shows a Subreddit Icon and refreshes when the data is avalaible
+// When clicked, redirect to the Subreddit
+
 class SubredditIcon extends StatelessWidget {
   final String name;
 

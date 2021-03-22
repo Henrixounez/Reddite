@@ -6,6 +6,9 @@ import 'package:reddite/utils/colors.dart';
 import 'package:reddite/utils/functions.dart';
 import 'package:reddite/utils/styles.dart';
 
+// Comment Content (Not Used)
+//
+// Shows a Comment as a UserContent in Profile / Saved Screen
 class CommentContent extends StatelessWidget {
   final Comment comment;
 

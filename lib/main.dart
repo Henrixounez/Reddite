@@ -13,6 +13,8 @@ Future<Null> main() async {
 
   String startScreen = loginRoute;
 
+  // Checks if the current loading of the app is triggered by Reddit's Oauth
+  // If yes, get the credentials from Oauth and connect the user
   getLinksStream().listen((event) async {
     try {
       if (await globalStore.initApp(authCode: Uri.parse(event).queryParameters['code'])) {

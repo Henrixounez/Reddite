@@ -12,6 +12,10 @@ import 'package:reddite/utils/styles.dart';
 import 'package:reddite/widgets/Button.dart';
 import 'package:reddite/widgets/Input.dart';
 
+// Reddite AppBar
+//
+// Main Scaffold AppBar with Search Input and Button to open Drawer
+
 class RedditeAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

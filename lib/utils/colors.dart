@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+// Color Palette
+// The colors can be changed easily here,
+// and is reflected everywhere in the app
 class ColorTheme {
   ColorTheme({
     @required this.primary,
@@ -26,6 +29,7 @@ class ColorTheme {
   final Color icon;
 }
 
+// Main Color Palette
 ColorTheme colorTheme = ColorTheme(
   primary: Color(0xFFFF5700), // Reddit Orange
   secondary: Color(0xFFFF9100), // Light Orange
