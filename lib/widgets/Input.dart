@@ -70,6 +70,8 @@ class RedditeSubmissionInput extends StatelessWidget {
   final String labelText;
   final Function validator;
   final TextEditingController controller;
+  final bool rounded;
+  final bool multiline;
 
   const RedditeSubmissionInput({
     Key key,
@@ -77,6 +79,8 @@ class RedditeSubmissionInput extends StatelessWidget {
     @required this.labelText,
     @required this.controller,
     @required this.validator,
+    this.rounded = false,
+    this.multiline = false,
   }) : super(key: key);
 
 
@@ -84,24 +88,24 @@ class RedditeSubmissionInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-          color: colorTheme.primaryBg,
-          borderRadius: BorderRadius.all(Radius.circular(100))
+          borderRadius: this.rounded ? BorderRadius.all(Radius.circular(100)) : null
         ),
         height: 50,
-        padding: EdgeInsets.only(left: 20),
         child: TextFormField(
           controller: controller,
+          keyboardType: multiline ? TextInputType.multiline : null,
+          maxLines: multiline ? null : 1,
           decoration: InputDecoration(
-              hintText: hintText,
-              labelText: labelText,
-              fillColor: colorTheme.primaryBg,
-              hintStyle: fontBook.copyWith(color: colorTheme.primaryText),
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
-              suffix: SizedBox(height: 20)
-            ),
+            hintText: hintText,
+            labelText: labelText,
+            fillColor: Colors.transparent,
+            hintStyle: fontBook.copyWith(color: colorTheme.primaryText, fontSize: 14),
+            border: InputBorder.none,
+            contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+            suffix: SizedBox(height: 20)
+          ),
           cursorColor: colorTheme.primaryText,
-          style: fontBook.copyWith(color: colorTheme.secondaryText),
+          style: fontBook.copyWith(color: colorTheme.secondaryText, fontSize: 14),
           validator: validator
         ),
     );

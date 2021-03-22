@@ -87,15 +87,57 @@ mixin _$SubmissionState on _SubmissionState, Store {
     });
   }
 
+  final _$urlInputControllerAtom =
+      Atom(name: '_SubmissionState.urlInputController');
+
+  @override
+  TextEditingController get urlInputController {
+    _$urlInputControllerAtom.reportRead();
+    return super.urlInputController;
+  }
+
+  @override
+  set urlInputController(TextEditingController value) {
+    _$urlInputControllerAtom.reportWrite(value, super.urlInputController, () {
+      super.urlInputController = value;
+    });
+  }
+
+  final _$isSubmittingAtom = Atom(name: '_SubmissionState.isSubmitting');
+
+  @override
+  bool get isSubmitting {
+    _$isSubmittingAtom.reportRead();
+    return super.isSubmitting;
+  }
+
+  @override
+  set isSubmitting(bool value) {
+    _$isSubmittingAtom.reportWrite(value, super.isSubmitting, () {
+      super.isSubmitting = value;
+    });
+  }
+
   final _$submitAsyncAction = AsyncAction('_SubmissionState.submit');
 
   @override
-  Future<Submission> submit() {
-    return _$submitAsyncAction.run(() => super.submit());
+  Future<Submission> submit(bool isSelf) {
+    return _$submitAsyncAction.run(() => super.submit(isSelf));
   }
 
   final _$_SubmissionStateActionController =
       ActionController(name: '_SubmissionState');
+
+  @override
+  dynamic setIsSubmitting(bool v) {
+    final _$actionInfo = _$_SubmissionStateActionController.startAction(
+        name: '_SubmissionState.setIsSubmitting');
+    try {
+      return super.setIsSubmitting(v);
+    } finally {
+      _$_SubmissionStateActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   dynamic setSubmitState(bool submitState) {
@@ -124,6 +166,8 @@ mixin _$SubmissionState on _SubmissionState, Store {
     return '''
 titleInputController: ${titleInputController},
 bodyInputController: ${bodyInputController},
+urlInputController: ${urlInputController},
+isSubmitting: ${isSubmitting},
 submitted: ${submitted},
 submitted_post: ${submitted_post}
     ''';

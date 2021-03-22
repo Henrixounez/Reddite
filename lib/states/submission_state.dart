@@ -51,26 +51,39 @@ abstract class _SubmissionState with Store {
   unload() {
     this._submitted_post = null;
     this._submitted = false;
+    this.isSubmitting = false;
     this.titleInputController.clear();
     this.bodyInputController.clear();
     this.urlInputController.clear();
   }
 
   @action
-  Future<Submission> submit() async {
+  Future<Submission> submit(bool isSelf) async {
     try {
       setIsSubmitting(true);
-      Submission result = await authStore.reddit.subreddit(postsStore.subreddit).submit(titleInputController.text, selftext: bodyInputController.text);
+      Subreddit subreddit = await authStore.reddit.subreddit(postsStore.subreddit).populate();
+      Submission result = isSelf ? (
+        await subreddit.submit(
+          titleInputController.text,
+          selftext: bodyInputController.text
+        )
+      ) : (
+        await subreddit.submit(
+          titleInputController.text,
+          url: urlInputController.text
+        )
+      );
       this._submitted_post = result;
-      
       // This is needed because DRAW is kinda broken and result from 'submit' are not populated
       // Without querying the submission, Post widget will broke.
       Submission new_submission = await authStore.reddit.submission(url: result.url).populate();
       setIsSubmitting(false);
       focusPostStore.setPost(new_submission);
-      Get.toNamed(postRoute);
+      this.unload();
+      Get.offAndToNamed(postRoute);
       return new_submission;
     } catch (e) {
+      setIsSubmitting(false);
       print("ERROR: \n");
       print(e);
       return null;

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/route_manager.dart';
 
 import 'package:reddite/states/auth.dart';
@@ -15,7 +15,6 @@ import 'package:reddite/utils/styles.dart';
 import 'package:reddite/widgets/Button.dart';
 import 'package:reddite/widgets/Input.dart';
 
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 class _Drawer extends StatelessWidget {
   const _Drawer({ Key key }) : super(key: key);
@@ -165,11 +164,13 @@ class RedditeScaffold extends StatefulWidget {
   final bool showNavbar;
   final Widget customNavbar;
   final bool extendBodyBehindAppBar;
+  final bool showFab;
 
   const RedditeScaffold({
     Key key,
     @required this.body,
     this.showNavbar = true,
+    this.showFab = true,
     this.extendBodyBehindAppBar = false,
     this.customNavbar,
   }) : super(key: key);
@@ -211,93 +212,97 @@ class _RedditeScaffoldState extends State<RedditeScaffold> with SingleTickerProv
         body: widget.body,
         drawer: _Drawer(),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        floatingActionButton: SizedBox.fromSize(
-          size: Size(250, 500),
-          child: Stack(
-            clipBehavior: Clip.none,
-            alignment: Alignment.bottomCenter,
-            children: <Widget>[
-              Positioned(
-                bottom: 30,
-                right: -170,
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: <Widget>[
-                    _secondaryNavigationAnimation.value != 0 ?
-                    Transform.translate(
-                      offset: Offset.fromDirection(_degreesToRadiant(270), _secondaryNavigationAnimation.value * 160),
-                      child: Opacity(
-                        opacity: _secondaryNavigationAnimation.value,
-                        child: FloatingActionButton(
-                          heroTag: 'post-image',
-                          tooltip: 'Post an image',
-                          backgroundColor: Color(0xff77dbc7),
-                          onPressed: () => {},
-                          child: Icon(
-                            FeatherIcons.video,
-                            color: Colors.white,
-                          ),
-                        )
+        floatingActionButton: widget.showFab ? fab() : null,
+      )
+    );
+  }
+
+  Widget fab() {
+    return SizedBox.fromSize(
+      size: Size(250, 500),
+      child: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.bottomCenter,
+        children: <Widget>[
+          Positioned(
+            bottom: 30,
+            right: -170,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: <Widget>[
+                // _secondaryNavigationAnimation.value != 0 ?
+                // Transform.translate(
+                //   offset: Offset.fromDirection(_degreesToRadiant(270), _secondaryNavigationAnimation.value * 240),
+                //   child: Opacity(
+                //     opacity: _secondaryNavigationAnimation.value,
+                //     child: FloatingActionButton(
+                //       heroTag: 'post-video',
+                //       tooltip: 'Post a video',
+                //       backgroundColor: Color(0xff77dbc7),
+                //       onPressed: () => Get.toNamed(submissionRoute),
+                //       child: Icon(
+                //         FeatherIcons.image,
+                //         color: Colors.white,
+                //       ),
+                //     ),
+                //   ),
+                // ) : SizedBox.shrink(),
+                _secondaryNavigationAnimation.value != 0 ?
+                Transform.translate(
+                  offset: Offset.fromDirection(_degreesToRadiant(270), _secondaryNavigationAnimation.value * 160),
+                  child: Opacity(
+                    opacity: _secondaryNavigationAnimation.value,
+                    child: FloatingActionButton(
+                      heroTag: 'post-text',
+                      tooltip: 'Post a text',
+                      backgroundColor: Colors.red,
+                      onPressed: () => Get.toNamed(submissionRoute, parameters: {"type": "text"}),
+                      child: Icon(
+                        FeatherIcons.type,
+                        color: Colors.white,
                       ),
-                    ) : SizedBox.shrink(),
-                    _secondaryNavigationAnimation.value != 0 ?
-                    Transform.translate(
-                      offset: Offset.fromDirection(_degreesToRadiant(270), _secondaryNavigationAnimation.value * 240),
-                      child: Opacity(
-                        opacity: _secondaryNavigationAnimation.value,
-                        child: FloatingActionButton(
-                          heroTag: 'post-video',
-                          tooltip: 'Post a video',
-                          backgroundColor: Colors.red,
-                          onPressed: () => {},
-                          child: Icon(
-                            FeatherIcons.image,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ) : SizedBox.shrink(),
-                    _secondaryNavigationAnimation.value != 0 ?
-                    Transform.translate(
-                      offset: Offset.fromDirection(_degreesToRadiant(270), _secondaryNavigationAnimation.value * 80),
-                      child: Opacity(
-                        opacity: _secondaryNavigationAnimation.value,
-                        child: FloatingActionButton(
-                          heroTag: 'post-link',
-                          tooltip: 'Post a link',
-                          backgroundColor: Color(0xfffac62c),
-                          onPressed: () => {},
-                          child: Icon(
-                            FeatherIcons.link,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ) : SizedBox.shrink(),
-                    Transform(
-                      transform: Matrix4.rotationZ(_degreesToRadiant(_rotationAnimation.value)),
-                      alignment: Alignment.center,
-                      child: FloatingActionButton(
-                        heroTag: 'post-open-close',
-                        backgroundColor: Color(0xfff38f26),
-                        onPressed: () => {
-                          if (_animationController.isCompleted) { _animationController.reverse() }
-                          else { _animationController.forward() }
-                        },
-                        child: Icon(
-                          FeatherIcons.plus,
-                          color: Colors.white,
-                        ),
+                    )
+                  ),
+                ) : SizedBox.shrink(),
+                _secondaryNavigationAnimation.value != 0 ?
+                Transform.translate(
+                  offset: Offset.fromDirection(_degreesToRadiant(270), _secondaryNavigationAnimation.value * 80),
+                  child: Opacity(
+                    opacity: _secondaryNavigationAnimation.value,
+                    child: FloatingActionButton(
+                      heroTag: 'post-link',
+                      tooltip: 'Post a link',
+                      backgroundColor: Color(0xfffac62c),
+                      onPressed: () => Get.toNamed(submissionRoute, parameters: {"type": "url"}),
+                      child: Icon(
+                        FeatherIcons.link,
+                        color: Colors.white,
                       ),
                     ),
-                  ]
-                )
-              )
-            ]
+                  ),
+                ) : SizedBox.shrink(),
+                Transform(
+                  transform: Matrix4.rotationZ(_degreesToRadiant(_rotationAnimation.value)),
+                  alignment: Alignment.center,
+                  child: FloatingActionButton(
+                    heroTag: 'post-open-close',
+                    backgroundColor: Color(0xfff38f26),
+                    onPressed: () => {
+                      if (_animationController.isCompleted) { _animationController.reverse() }
+                      else { _animationController.forward() }
+                    },
+                    child: Icon(
+                      FeatherIcons.plus,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ]
+            )
           )
-        ),
+        ]
       )
     );
   }

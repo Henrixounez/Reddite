@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:draw/draw.dart';
 
 import 'package:reddite/states/submission_state.dart';
 
@@ -19,14 +18,17 @@ class SubmissionScreen extends StatelessWidget {
           return true;
         },
         child: RedditeScaffold(
-          showNavbar: false,
-          body: Container(
-            padding: EdgeInsets.all(50),
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-                color: colorTheme.secondaryBg,
+          showFab: false,
+          customNavbar: AppBar(
+            backgroundColor: colorTheme.primary,
+            shadowColor: Colors.transparent,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () => Navigator.pop(context),
             ),
+          ),
+          body: Container(
+            color: colorTheme.primaryBg,
             child: SubmissionForm()
           )
         )

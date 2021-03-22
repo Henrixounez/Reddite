@@ -6,6 +6,7 @@ class ColorTheme {
     @required this.secondary,
     @required this.primaryBg,
     @required this.secondaryBg,
+    @required this.ternaryBg,
     @required this.primaryText,
     @required this.secondaryText,
     @required this.upvote,
@@ -17,6 +18,7 @@ class ColorTheme {
   final Color secondary;
   final Color primaryBg;
   final Color secondaryBg;
+  final Color ternaryBg;
   final Color primaryText;
   final Color secondaryText;
   final Color upvote;
@@ -29,6 +31,7 @@ ColorTheme colorTheme = ColorTheme(
   secondary: Color(0xFFFF9100), // Light Orange
   primaryBg: Color(0xFFFFFFFF), // White
   secondaryBg: Color(0xFF303030), // Dark Grey
+  ternaryBg: Color(0xFFF8F8F8), // Light Grey
   primaryText: Color(0xFFC2C2C2), // Light Text
   secondaryText: Color(0xFF303030), // Dark Grey
   upvote: Color(0xffFF8B60), // Upvote Orange

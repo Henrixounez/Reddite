@@ -3,14 +3,13 @@ import 'package:flutter/widgets.dart';
 import 'package:draw/draw.dart';
 
 import 'package:reddite/states/focus_post_state.dart';
+import 'package:reddite/utils/colors.dart';
 
 import 'package:reddite/utils/functions.dart';
 
 import 'package:reddite/widgets/Post.dart';
 import 'package:reddite/widgets/PostComment.dart';
 import 'package:reddite/widgets/Scaffold.dart';
-
-import '../states/focus_post_state.dart';
 
 class PostScreen extends StatelessWidget {
   @override
@@ -22,6 +21,15 @@ class PostScreen extends StatelessWidget {
           return true;
         },
         child: RedditeScaffold(
+          customNavbar: AppBar(
+            backgroundColor: colorTheme.primary,
+            shadowColor: Colors.transparent,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ),
+
           body: ListView(
             children: [
               Post(post: focusPostStore.post),
