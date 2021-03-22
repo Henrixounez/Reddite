@@ -28,6 +28,7 @@ class ProfileScreen extends StatelessWidget {
       },
       child: RedditeScaffold(
         extendBodyBehindAppBar: true,
+        showFab: false,
         customNavbar: AppBar(
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,

@@ -3,14 +3,15 @@ import 'package:flutter/widgets.dart';
 import 'package:reddite/utils/colors.dart';
 
 class RedditeLoginButton extends StatelessWidget {
+
+  final Widget child;
+  final Function onPressed;
+
   const RedditeLoginButton({
     Key key,
     this.child,
     this.onPressed,
   }) : super(key: key);
-
-  final Widget child;
-  final Function onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +41,7 @@ class RedditeButton extends StatelessWidget {
   final Widget child;
   final Function onPressed;
   final Function onLongPressed;
+  final Color buttonColor;
   final bool rounded;
 
   const RedditeButton({
@@ -47,6 +49,7 @@ class RedditeButton extends StatelessWidget {
     @required this.child,
     this.onPressed,
     this.onLongPressed,
+    this.buttonColor = null,
     this.rounded = true,
   }) : super(key: key);
 
@@ -54,7 +57,7 @@ class RedditeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return (
       Material(
-        color: Colors.transparent,
+        color: buttonColor ?? Colors.transparent,
         borderRadius: rounded == true ? BorderRadius.all(Radius.circular(100)) : null,
         child: InkWell(
           onLongPress: onLongPressed,
@@ -62,6 +65,30 @@ class RedditeButton extends StatelessWidget {
           child: child
         )
       )
+    );
+  }
+}
+
+class RedditeSubmissionButton extends StatelessWidget {
+
+  final Function onPressed;
+  final bool visible;
+
+  const RedditeSubmissionButton({
+    Key key,
+    this.visible = true,
+    this.onPressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Visibility(
+      child: FloatingActionButton(
+        child: Icon(Icons.file_upload),
+        onPressed: this.onPressed,
+        backgroundColor: colorTheme.primary,
+      ),
+      visible: this.visible,
     );
   }
 }
